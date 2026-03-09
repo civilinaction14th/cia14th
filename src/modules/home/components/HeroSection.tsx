@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="flex flex-col items-center justify-center text-center px-4">
+    <section className="flex flex-col items-center justify-end h-screen pb-24 text-center px-4">
       {/* Center Emblem */}
-      <div className="relative w-80 h-80 mb-0 z-1">
+      <div className="absolute top-4 ml-12 w-110 h-110 mb-0 z-1">
         <Image
           src="/images/Logo.png"
           alt="Civil In Action Emblem"
@@ -16,18 +16,19 @@ export default function HeroSection() {
       </div>
 
       {/* Title Image */}
-      <div className="relative w-2xl max-w-[90vw] h-28 mb-3">
+      <div className="relative mb-0">
         <Image
           src="/images/CIA-title.png"
           alt="14th Civil In Action"
-          fill
+          width={1100}
+          height={300}
           className="object-contain"
           priority
         />
       </div>
 
       {/* Subtitle */}
-      <p className="text-white/85 italic text-sm mb-8 max-w-md tracking-wide">
+      <p className="text-white text-2xl mb-4 font-bold tracking-wide">
         &quot;Kolaborasi Pembangunan Nusantara, Infrastruktur Tangguh Berdaya&quot;
       </p>
 
@@ -35,13 +36,13 @@ export default function HeroSection() {
       <div className="flex items-center gap-4">
         <Link
           href="#"
-          className="px-9 py-2 border border-dashed border-white/70 text-white text-sm font-medium hover:bg-white/10 transition-colors"
+          className="px-12 py-2 border-2 border-dashed border-white text-white text-lg font-medium hover:bg-white/10 transition-colors rounded-xl"
         >
           Masuk
         </Link>
         <Link
           href="#"
-          className="px-7 py-2 bg-amber-500 text-white text-sm font-bold hover:bg-amber-600 transition-colors shadow-lg"
+          className="px-12 py-2 bg-white border-2 border-white text-black text-lg font-bold transition-colors shadow-lg rounded-xl"
         >
           Daftar Sekarang !
         </Link>

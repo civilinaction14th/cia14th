@@ -4,10 +4,10 @@ import FloatingIcons from "./components/FloatingIcons";
 
 export default function HomeModule() {
   return (
-    <main className="relative min-h-screen overflow-hidden flex flex-col isolate">
+    <main className="relative min-h-screen flex flex-col isolate">
       {/* Floating decorative icons */}
       <div className="absolute inset-0 pointer-events-none z-[1]">
-        <FloatingIcons />
+        {/* <FloatingIcons /> */}
       </div>
 
       {/* Navbar */}
@@ -20,9 +20,9 @@ export default function HomeModule() {
         <HeroSection />
       </div>
 
-      {/* Texture overlay — paling atas, soft-light 48% seperti di Figma */}
+      {/* Texture overlay */}
       <div
-        className="absolute inset-0 bg-cover bg-start z-[10] pointer-events-none"
+        className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
         style={{
           backgroundImage: "url('/images/TextureBg.png')",
           opacity: 0.48,
