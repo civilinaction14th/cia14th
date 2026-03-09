@@ -39,6 +39,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
+      if (user) {
+        document.cookie = "auth-status=true; path=/; SameSite=Lax";
+      } else {
+        document.cookie = "auth-status=; path=/; max-age=0";
+      }
     });
 
     return unsubscribe;
