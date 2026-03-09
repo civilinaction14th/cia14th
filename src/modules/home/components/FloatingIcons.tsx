@@ -11,9 +11,9 @@ const icons = [
   {
     src: "/images/Star.svg",
     alt: "Star Decoration",
-    width: 285,
-    height: 285,
-    style: { top: "-4%", right: "-4%" },
+    width: 350,
+    height: 350,
+    style: { top: "-12%", right: "-4%" },
   },
   {
     src: "/svg/ITC.svg",
@@ -25,16 +25,23 @@ const icons = [
   {
     src: "/svg/SBC.svg",
     alt: "SBC Icon",
-    width: 220,
-    height: 220,
-    style: { top: "38%", right: "8%" },
+    width: 240,
+    height: 240,
+    style: { top: "28%", right: "8%" },
   },
   {
     src: "/svg/CIC.svg",
     alt: "CIC Icon",
     width: 220,
     height: 220,
-    style: { bottom: "2%", right: "12%" },
+    style: { bottom: "2%", right: "6%" },
+  },
+  {
+    src: "/svg/Line.svg",
+    alt: "Line Decoration",
+    width: 150,
+    height: 150,
+    style: { bottom: "-70%", left: "0%" },
   },
   {
     src: "/images/fan.svg",

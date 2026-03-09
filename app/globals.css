@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Causten';
+  src: url('/font/Causten Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PublicaSansRound';
+  src: url('/font/PublicaSansRound-Bd.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
 :root {
   --foreground: #ffffff;
 }
@@ -8,6 +22,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-causten: 'Causten', sans-serif;
+  --font-publicas: 'PublicaSansRound', sans-serif;
 }
 
 body {

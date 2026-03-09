@@ -10,31 +10,43 @@ const navLinks = [
 
 export default function Navbar() {
   return (
-    <nav className="relative z-20 flex items-center justify-between px-8 py-3 bg-[#091724]/75 backdrop-blur-sm">
+    <nav className="fixed top-2 w-full z-[999] overflow-hidden" style={{ height: '80px' }}>
+      {/* Background SVG — fill by height, sides get clipped */}
       <Image
-        src="/images/Logo.png"
-        alt="CIA 14th Logo"
-        width={44}
-        height={44}
-        className="object-contain"
+        src="/svg/Navbar.svg"
+        alt=""
+        fill
+        className="object-cover object-center"
         priority
       />
-      <div className="flex items-center gap-7">
-        {navLinks.map((link) => (
+
+      {/* Content on top */}
+      <div className="absolute inset-0 flex items-center justify-between px-8 w-full">
+        <Image
+          src="/images/Logo.png"
+          alt="CIA 14th Logo"
+          width={80}
+          height={80}
+          className="object-contain"
+          priority
+        />
+        <div className="flex items-center gap-7">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="text-white text-lg font-normal hover:text-amber-400 transition-colors font-[Causten]"
+            >
+              {link.label}
+            </Link>
+          ))}
           <Link
-            key={link.label}
-            href={link.href}
-            className="text-white text-sm font-normal hover:text-amber-400 transition-colors"
+            href="#"
+            className="text-white bg-[#2d4b5e]/60 px-4 py-1 rounded-lg text-lg font-bold hover:text-amber-400 transition-colors font-[Causten]"
           >
-            {link.label}
+            Registration
           </Link>
-        ))}
-        <Link
-          href="#"
-          className="text-white text-sm font-bold hover:text-amber-400 transition-colors"
-        >
-          Registration
-        </Link>
+        </div>
       </div>
     </nav>
   );

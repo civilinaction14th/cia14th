@@ -5,7 +5,7 @@ export default function HeroSection() {
   return (
     <section className="flex flex-col items-center justify-end h-screen pb-24 text-center px-4">
       {/* Center Emblem */}
-      <div className="absolute top-4 ml-12 w-110 h-110 mb-0 z-1">
+      <div className="absolute top-12 ml-12 w-110 h-110 mb-0 z-1">
         <Image
           src="/images/Logo.png"
           alt="Civil In Action Emblem"
@@ -28,7 +28,7 @@ export default function HeroSection() {
       </div>
 
       {/* Subtitle */}
-      <p className="text-white text-2xl mb-4 font-bold tracking-wide">
+      <p className="text-white text-2xl mb-4 font-bold tracking-wide font-[PublicaSansRound]">
         &quot;Kolaborasi Pembangunan Nusantara, Infrastruktur Tangguh Berdaya&quot;
       </p>
 
