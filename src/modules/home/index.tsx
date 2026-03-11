@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import FloatingIcons from "./components/FloatingIcons";
 
@@ -11,9 +11,9 @@ export default function HomeModule() {
       </div>
 
       {/* Navbar */}
-      <div className="relative z-[9]">
+      {/* <div className="relative z-[999]">
         <Navbar />
-      </div>
+      </div> */}
 
       {/* Hero content */}
       <div className="relative z-[2] flex-1 flex items-center justify-center pb-16 pt-8">
@@ -26,7 +26,7 @@ export default function HomeModule() {
         style={{
           backgroundImage: "url('/images/TextureBg.png')",
           opacity: 0.48,
-          mixBlendMode: 'soft-light',
+          mixBlendMode: "soft-light",
         }}
       />
     </main>

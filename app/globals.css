@@ -1,16 +1,30 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Causten';
-  src: url('/font/Causten Medium.ttf') format('truetype');
+  font-family: "Causten";
+  src: url("/font/Causten Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'PublicaSansRound';
-  src: url('/font/PublicaSansRound-Bd.otf') format('opentype');
+  font-family: "PublicaSansRound";
+  src: url("/font/PublicaSansRound-Bd.otf") format("opentype");
   font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PublicaSansRound";
+  src: url("/font/PublicaSansRound-Md.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PublicaSansRound";
+  src: url("/font/PublicaSansRound-Rg.otf") format("opentype");
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -20,14 +34,13 @@
 
 @theme inline {
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-causten: 'Causten', sans-serif;
-  --font-publicas: 'PublicaSansRound', sans-serif;
+  --font-causten: "Causten", sans-serif;
+  --font-publicas: "PublicaSansRound", sans-serif;
+  --font-poppins: var(--font-poppins), sans-serif;
 }
 
 body {
-  background: linear-gradient(to right, #001529 47%, #0D334E 100%);
+  background: linear-gradient(to right, #001529 47%, #0d334e 100%);
   /* color: var(--foreground); */
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;

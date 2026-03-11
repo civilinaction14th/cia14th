@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
+import Navbar from "@/src/modules/navbar/Navbar";
+import Footer from "@/src/modules/footer/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { AOSProvider } from "@/src/providers/AOSProvider";
+import { PublicaRegular, PublicaMedium, PublicaBold } from "@/src/utils/font";
+import { cn } from "@/lib/utils";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: "CIA 14th — Civil In Action",
-  description: "Kolaborasi Pembangunan Nusantara, Infrastruktur Tangguh Berdaya",
+  description:
+    "Kolaborasi Pembangunan Nusantara, Infrastruktur Tangguh Berdaya",
 };
 
 export default function RootLayout({
@@ -26,9 +29,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={cn(
+          poppins.variable,
+          PublicaRegular.variable,
+          PublicaMedium.variable,
+          PublicaBold.variable,
+          "antialiased",
+        )}
       >
-        <AuthProvider>{children}</AuthProvider>
+        <AOSProvider>
+          <AuthProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </AuthProvider>
+        </AOSProvider>
       </body>
     </html>
   );
