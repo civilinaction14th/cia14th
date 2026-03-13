@@ -7,9 +7,9 @@ export default function Home() {
   return (
     <>
       <HomeModule />
-      <TestimoniPemenang />
+      {/* <TestimoniPemenang />
       <PersyaratanUmum />
-      <InformasiLanjut />
+      <InformasiLanjut /> */}
     </>
   );
 }
