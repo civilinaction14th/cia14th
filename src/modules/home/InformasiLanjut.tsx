@@ -53,8 +53,16 @@ const contacts = [
 
 export default function InformasiLanjut() {
   return (
-    <section className="relative overflow-x-clip overflow-y-visible">
-      <Jeans />
+    <section className="relative overflow-x-clip overflow-y-visible isolate">
+      {/* Texture overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/TextureBg.png')",
+          opacity: 0.48,
+          mixBlendMode: "soft-light",
+        }}
+      />
       <Image
         src="/home/informasi-lanjut/batik-infinite.webp"
         alt="Batik Infinite"

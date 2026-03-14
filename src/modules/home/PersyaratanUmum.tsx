@@ -27,8 +27,16 @@ const content = [
 
 export default function PersyaratanUmum() {
   return (
-    <section className="relative pt-10 md:pt-20 overflow-x-clip overflow-y-visible">
-      <Jeans />
+    <section className="relative pt-10 md:pt-20 overflow-x-clip overflow-y-visible isolate">
+      {/* Texture overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/TextureBg.png')",
+          opacity: 0.48,
+          mixBlendMode: "soft-light",
+        }}
+      />
       <Image
         src="/home/persyaratan/bintang.webp"
         alt="Bintang"

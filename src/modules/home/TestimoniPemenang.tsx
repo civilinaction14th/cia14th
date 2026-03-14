@@ -4,8 +4,16 @@ import Image from "next/image";
 
 export default function TestimoniPemenang() {
   return (
-    <section className="relative overflow-x-clip overflow-y-visible">
-      <Jeans />
+    <section className="relative overflow-x-clip overflow-y-visible isolate">
+    {/* Texture overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/TextureBg.png')",
+          opacity: 0.48,
+          mixBlendMode: "soft-light",
+        }}
+      />
       <div className="absolute -top-40 md:-top-80 lg:-top-146 left-1/2 -translate-x-1/2 w-[104vw] pointer-events-none">
         <Image
           src="/home/testimoni/garis.webp"
