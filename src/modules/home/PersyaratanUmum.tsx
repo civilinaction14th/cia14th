@@ -1,7 +1,7 @@
-import { Jeans } from "@/src/element/Jeans";
+import { Jeans } from "@/src/components/element/Jeans";
 import Image from "next/image";
-import DefaultLayout from "@/src/element/DefaultLayout";
-import { BordirCard } from "@/src/element/BordirCard";
+import DefaultLayout from "@/src/components/layouts/DefaultLayout";
+import { BordirCard } from "@/src/components/element/BordirCard";
 
 const content = [
   {

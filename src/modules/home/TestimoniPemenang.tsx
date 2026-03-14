@@ -1,5 +1,5 @@
-import { Jeans } from "@/src/element/Jeans";
-import DefaultLayout from "@/src/element/DefaultLayout";
+import { Jeans } from "@/src/components/element/Jeans";
+import DefaultLayout from "@/src/components/layouts/DefaultLayout";
 import Image from "next/image";
 
 export default function TestimoniPemenang() {
