@@ -4,7 +4,7 @@ import FloatingIcons from "./components/FloatingIcons";
 
 export default function HomeModule() {
   return (
-    <main className="relative min-h-screen flex flex-col isolate overflow-hidden">
+    <main className="relative min-h-screen flex flex-col isolate">
       {/* Floating decorative icons */}
       <div className="absolute inset-0 pointer-events-none z-[1]">
         <FloatingIcons />

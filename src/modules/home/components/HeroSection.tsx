@@ -3,26 +3,27 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="flex flex-col items-center justify-center md:justify-end h-screen pb-24 text-center px-4">
+    <section className="flex flex-col items-center justify-center h-screen pb-24 text-center px-4">
       {/* Center Emblem */}
-      <div className="absolute top-38 md:left-1/2 md:-translate-x-1/2 md:top-12 ml-12 w-72 h-72 md:w-110 md:h-110 mb-0 z-1">
+      <div className="mb-0 z-1 mt-0 md:mt-[10%]">
         <Image
           src="/images/Logo.webp"
           alt="Civil In Action Emblem"
-          fill
-          className="object-contain drop-shadow-2xl"
+          width={288}
+          height={288}
+          className="w-54 sm:w-64 md:w-102 drop-shadow-2xl"
           priority
         />
       </div>
 
       {/* Title Image */}
-      <div className="relative mb-0 mt-64 md:mt-0">
+      <div className="relative mb-0 mt-0 w-full max-w-xs sm:max-w-lg md:max-w-3xl lg:max-w-5xl">
         <Image
           src="/images/CIA-title.png"
           alt="14th Civil In Action"
           width={1100}
           height={300}
-          className="object-contain"
+          className="w-full h-auto"
           priority
         />
       </div>
