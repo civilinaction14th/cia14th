@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/src/utils/helpers/cn";
 import React from "react";
 
 interface DefaultLayoutProps {

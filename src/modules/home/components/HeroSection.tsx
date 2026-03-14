@@ -7,7 +7,7 @@ export default function HeroSection() {
       {/* Center Emblem */}
       <div className="absolute top-38 md:left-1/2 md:-translate-x-1/2 md:top-12 ml-12 w-72 h-72 md:w-110 md:h-110 mb-0 z-1">
         <Image
-          src="/images/Logo.png"
+          src="/images/Logo.webp"
           alt="Civil In Action Emblem"
           fill
           className="object-contain drop-shadow-2xl"
@@ -29,7 +29,8 @@ export default function HeroSection() {
 
       {/* Subtitle */}
       <p className="text-white text-sm sm:text-lg md:text-2xl mb-4 font-bold tracking-wide font-[PublicaSansRound]">
-        &quot;Kolaborasi Pembangunan Nusantara, Infrastruktur Tangguh Berdaya&quot;
+        &quot;Kolaborasi Pembangunan Nusantara, Infrastruktur Tangguh
+        Berdaya&quot;
       </p>
 
       {/* CTA Buttons */}

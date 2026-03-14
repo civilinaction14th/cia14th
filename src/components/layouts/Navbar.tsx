@@ -26,7 +26,7 @@ export default function Navbar() {
       {/* Content on top */}
       <div className="absolute inset-0 flex items-center justify-between px-8 w-full">
         <Image
-          src="/images/Logo.png"
+          src="/images/Logo.webp"
           alt="CIA 14th Logo"
           width={80}
           height={80}

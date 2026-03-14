@@ -30,10 +30,12 @@ export function bordir({
 
         if (!colorValue) return {};
 
-        const strokeWidth = widths[widthKey] || widths.default || "2";
+        const strokeWidth = widths[widthKey] || widths.default || "2.5";
+        const offset = Number(strokeWidth) / 2 + 1;
+        const doubleOffset = offset * 2;
 
         const encodedColor = encodeURIComponent(colorValue);
-        const svg = `<svg stroke='${encodedColor}' stroke-width='${strokeWidth}' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='none' rx='10' ry='10' stroke-dasharray='24,14,12,14' stroke-dashoffset='0' stroke-linecap='square'/></svg>`;
+        const svg = `<svg stroke='${encodedColor}' stroke-width='${strokeWidth}' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect x='${offset}px' y='${offset}px' width='calc(100% - ${doubleOffset}px)' height='calc(100% - ${doubleOffset}px)' fill='none' rx='10' ry='10' stroke-dasharray='12,8' stroke-dashoffset='0' stroke-linecap='square'/></svg>`;
 
         return {
           "background-image": `url("data:image/svg+xml,${svg}")`,
