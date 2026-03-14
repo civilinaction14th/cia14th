@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
-import Navbar from "@/src/modules/navbar/Navbar";
-import Footer from "@/src/modules/footer/Footer";
 
-import { AOSProvider } from "@/src/providers/AOSProvider";
-import { PublicaRegular, PublicaMedium, PublicaBold } from "@/src/utils/font";
-import { cn } from "@/lib/utils";
+import { AOSProvider } from "@/src/utils/providers/AOSProvider";
+import {
+  PublicaRegular,
+  PublicaMedium,
+  PublicaBold,
+} from "@/src/utils/helpers/font";
+import { cn } from "@/src/utils/helpers/cn";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -38,11 +40,7 @@ export default function RootLayout({
         )}
       >
         <AOSProvider>
-          <AuthProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </AOSProvider>
       </body>
     </html>
