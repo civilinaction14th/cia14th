@@ -55,12 +55,22 @@
   background: linear-gradient(140deg, #1f4b66 0%, #031625 100%);
 }
 
-/* Fix untuk Menghilangkan Background Warna dari Autofill Browser  */
+/* Background gelap (Default) - Misal di halaman Login */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #ffffff;
-  transition: background-color 5000s ease-in-out 0s;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Override spesifik untuk input form (putih) */
+input.form-input-white:-webkit-autofill,
+input.form-input-white:-webkit-autofill:hover,
+input.form-input-white:-webkit-autofill:focus,
+input.form-input-white:-webkit-autofill:active {
+  -webkit-text-fill-color: #000000 !important;
+  -webkit-background-clip: border-box !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
