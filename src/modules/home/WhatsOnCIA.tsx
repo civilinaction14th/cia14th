@@ -45,23 +45,30 @@ export default function WhatsOnCIA() {
   return (
     <section className="relative overflow-x-clip overflow-y-visible isolate">
       <Jeans />
-      {/* Flanel */}
-      <img
-        src="/home/whatsoncia/resletingv3.webp"
-        alt="resleting"
-        className="absolute top-0 left-0 w-full h-auto z-10 pointer-events-none "
-        style={{
-          mixBlendMode: "soft-light",
-        }}
-      />
-      <div className="relative py-40 min-h-screen z-[99]">
-        <Image
-          src="/home/whatsoncia/whatsOnCIA.webp"
-          alt="whatsOnCIA"
-          width={3493}
-          height={1100}
-          className="w-full max-w-[90vw] md:max-w-7xl mx-auto mt-26 mb-20 drop-shadow-2xl"
-        />
+
+      <div className="relative w-full pb-10 md:pb-20">
+        {/* Flanel & Resleting */}
+        <div className="absolute top-0 md:top-20 left-1/2 -translate-x-1/2 w-[200%] md:w-full min-w-[750px] h-auto z-10 pointer-events-none">
+          <img
+            src="/home/whatsoncia/resletingv3.webp"
+            alt="resleting"
+            className="w-full h-auto"
+            style={{ mixBlendMode: "soft-light" }}
+          />
+        </div>
+
+        <div className="relative pt-45 md:pt-85 z-[99]">
+          <Image
+            src="/home/whatsoncia/whatsOnCIA.webp"
+            alt="whatsOnCIA"
+            width={3000}
+            height={1000}
+            className="w-full max-w-[90vw] md:max-w-[80vw] mx-auto drop-shadow-2xl"
+          />
+        </div>
+      </div>
+
+      <div className="relative pb-40 min-h-screen z-[100] mt-4 md:mt-0">
         <div className="flex flex-col gap-2">
           {competitions.map((comp, index) => (
             <BordirCardCIA key={index} {...comp} />
