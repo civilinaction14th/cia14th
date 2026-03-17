@@ -3,16 +3,17 @@ import Events from "@/src/modules/home/Events";
 import InformasiLanjut from "@/src/modules/home/InformasiLanjut";
 import PersyaratanUmum from "@/src/modules/home/PersyaratanUmum";
 import TestimoniPemenang from "@/src/modules/home/TestimoniPemenang";
+import WhatsOnCIA from "@/src/modules/home/WhatsOnCIA";
 
 export default function Home() {
   return (
     <main className="background-landing isolate">
       <HomeModule />
-      <Events />
+      <WhatsOnCIA />
+      {/* <Events /> */}
       <TestimoniPemenang />
       <PersyaratanUmum />
       <InformasiLanjut />
-      
     </main>
   );
 }
