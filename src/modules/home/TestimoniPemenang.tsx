@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function TestimoniPemenang() {
   return (
-    <section className="relative overflow-x-clip overflow-y-visible isolate">
+    <section className="relative overflow-visible [clip-path:inset(-40rem_0_0_0)] isolate">
     {/* Texture overlay */}
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
@@ -12,6 +12,7 @@ export default function TestimoniPemenang() {
           backgroundImage: "url('/images/TextureBg.png')",
           opacity: 0.48,
           mixBlendMode: "soft-light",
+          height: "150%",
         }}
       />
       <div className="absolute -top-40 md:-top-80 lg:-top-146 left-1/2 -translate-x-1/2 w-[104vw] pointer-events-none">

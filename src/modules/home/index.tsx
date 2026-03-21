@@ -6,7 +6,7 @@ export default function HomeModule() {
   return (
     <main className="relative min-h-screen flex flex-col isolate">
       {/* Floating decorative icons */}
-      <div className="absolute inset-0 pointer-events-none z-[1]">
+      <div className="absolute inset-0 pointer-events-none z-[2]">
         <FloatingIcons />
       </div>
 
@@ -27,6 +27,7 @@ export default function HomeModule() {
           backgroundImage: "url('/images/TextureBg.png')",
           opacity: 0.48,
           mixBlendMode: "soft-light",
+          height: "150%",
         }}
       />
     </main>

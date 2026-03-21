@@ -44,13 +44,11 @@ export default function WhatsOnCIA() {
 
   return (
     <section className="relative overflow-x-clip overflow-y-visible isolate">
-      <Jeans />
-
-      <div className="relative w-full pb-10 md:pb-20">
-        {/* Flanel & Resleting */}
+      {/* Flanel & Resleting */}
+      <div className="relative w-full pb-10 md:pb-20 z-10">
         <div className="absolute top-0 md:top-20 left-1/2 -translate-x-1/2 w-[200%] md:w-full min-w-[750px] h-auto z-10 pointer-events-none">
           <img
-            src="/home/whatsoncia/resletingv3.webp"
+            src="/home/whatsoncia/1.webp"
             alt="resleting"
             className="w-full h-auto"
             style={{ mixBlendMode: "soft-light" }}
@@ -59,7 +57,7 @@ export default function WhatsOnCIA() {
 
         <div className="relative pt-45 md:pt-85 z-[99]">
           <Image
-            src="/home/whatsoncia/whatsOnCIA.webp"
+            src="/home/whatsoncia/whatsoncia.webp"
             alt="whatsOnCIA"
             width={3000}
             height={1000}
@@ -69,6 +67,14 @@ export default function WhatsOnCIA() {
       </div>
 
       <div className="relative pb-40 min-h-screen z-[100] mt-4 md:mt-0">
+        <div
+          className="absolute inset-0 bg-contain bg-start z-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/TextureBg.png')",
+            opacity: 0.48,
+            mixBlendMode: "soft-light",
+          }}
+        />
         <div className="flex flex-col gap-2">
           {competitions.map((comp, index) => (
             <BordirCardCIA key={index} {...comp} />

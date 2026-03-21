@@ -35,6 +35,7 @@ export default function PersyaratanUmum() {
           backgroundImage: "url('/images/TextureBg.png')",
           opacity: 0.48,
           mixBlendMode: "soft-light",
+          height: "150%",
         }}
       />
       <Image
