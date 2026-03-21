@@ -27,7 +27,7 @@ const content = [
 
 export default function PersyaratanUmum() {
   return (
-    <section className="relative pt-10 md:pt-20 overflow-x-clip overflow-y-visible isolate">
+    <section className="relative pt-10 md:pt-20 overflow-visible [clip-path:inset(-40rem_0_0_0)] isolate">
       {/* Texture overlay */}
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
@@ -49,19 +49,18 @@ export default function PersyaratanUmum() {
         data-aos="fade-down-right"
         data-aos-duration="1000"
       />
-
       <Image
-        src="/home/persyaratan/batik-plus.webp"
-        alt="Batik"
-        width={2766}
-        height={2766}
-        className="absolute top-20 -left-20 w-[50%] md:w-[40%] h-auto object-contain pointer-events-none"
-        style={{ transform: "translate(-10%, 45%)" }}
-        loading="lazy"
-        data-aos="fade-right"
-        data-aos-delay="200"
-        data-aos-duration="1200"
-      />
+              src="/home/persyaratan/batik-plus.webp"
+              alt="Batik"
+              width={2766}
+              height={2766}
+              className="absolute -top-40 -right-60 w-[50%] md:w-[40%] h-auto object-contain pointer-events-none"
+              style={{ transform: "translate(-10%, 45%)" }}
+              loading="lazy"
+              data-aos="fade-right"
+              data-aos-delay="200"
+              data-aos-duration="1200"
+            />
 
       <DefaultLayout>
         <div className="relative w-[90%] md:w-[85%] lg:w-[75%] z-12 mx-auto mt-10 md:mt-0">

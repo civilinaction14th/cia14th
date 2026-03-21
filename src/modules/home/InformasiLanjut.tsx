@@ -53,7 +53,7 @@ const contacts = [
 
 export default function InformasiLanjut() {
   return (
-    <section className="relative overflow-x-clip overflow-y-visible isolate">
+    <section className="relative overflow-hidden [clip-path:inset(-40rem_0_0_0)] isolate">
       {/* Texture overlay */}
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
@@ -61,8 +61,11 @@ export default function InformasiLanjut() {
           backgroundImage: "url('/images/TextureBg.png')",
           opacity: 0.48,
           mixBlendMode: "soft-light",
+          height: "110%",
         }}
       />
+      
+
       <Image
         src="/home/informasi-lanjut/batik-infinite.webp"
         alt="Batik Infinite"
@@ -83,7 +86,7 @@ export default function InformasiLanjut() {
         data-aos="fade-down-left"
         data-aos-delay="200"
       />
-      <div className="absolute -top-40 md:-top-80 left-1/2 -translate-x-1/2 w-[104vw] z-1 pointer-events-none">
+      <div className="absolute top-0 md:-top-80 left-1/2 -translate-x-1/2 w-[104vw] z-1 pointer-events-none">
         <Image
           src="/home/informasi-lanjut/garis.webp"
           alt="Garis"

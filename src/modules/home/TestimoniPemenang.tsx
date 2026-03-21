@@ -15,7 +15,7 @@ export default function TestimoniPemenang() {
           height: "150%",
         }}
       />
-      <div className="absolute -top-40 md:-top-80 lg:-top-146 left-1/2 -translate-x-1/2 w-[104vw] pointer-events-none">
+      <div className="absolute -top-40 z-0 md:-top-80 lg:-top-146 left-1/2 -translate-x-1/2 w-[104vw] pointer-events-none">
         <Image
           src="/home/testimoni/garis.webp"
           alt="Garis"
