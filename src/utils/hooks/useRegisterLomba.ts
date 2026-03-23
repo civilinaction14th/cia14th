@@ -120,14 +120,41 @@ export const useRegisterLomba = () => {
         }
       }
 
-      // -- 5. Submit Teks dan Drive Links ke Firestore --
-      await addDoc(collection(db, "registrations"), {
+      // -- 5. Submit Data ke Google Sheets 
+      const sheetsData = {
+        competition: compKey,
+        userId,
+        createdAt: new Date().toISOString(),
+        ...textData,
+        documents: uploadedDocs,
+      };
+
+      const sheetsResponse = await fetch("/api/write-to-sheets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sheetsData),
+      });
+
+      if (!sheetsResponse.ok) {
+        const sheetsError = await sheetsResponse.json().catch(() => ({}));
+        throw new Error(
+          sheetsError.error ||
+            "Gagal menyimpan data ke Google Sheets. Registrasi dibatalkan.",
+        );
+      }
+
+      // -- 6. Submit Teks dan Drive Links ke Firestore 
+      const firestoreData = {
         competition: compKey,
         userId,
         createdAt: serverTimestamp(),
-        ...textData, // seluruh input field masuk kesini (namaKetua, dosenNama, jk, dsb)
-        documents: uploadedDocs, // seluruh link Drive masuk ke object "documents"
-      });
+        ...textData,
+        documents: uploadedDocs,
+      };
+
+      await addDoc(collection(db, "registrations"), firestoreData);
 
       setSuccess(true);
       return { success: true, message: "Berhasil registrasi!" };
