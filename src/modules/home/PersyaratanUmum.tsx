@@ -49,7 +49,7 @@ export default function PersyaratanUmum() {
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
         style={{
-          backgroundImage: "url('/images/TextureBg.png')",
+          backgroundImage: "url('/home/persyaratan/1.webp')",
           opacity: 0.48,
           mixBlendMode: "soft-light",
           height: "150%",
