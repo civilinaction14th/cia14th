@@ -4,30 +4,36 @@ import { google } from "googleapis";
 async function getOrCreateSubfolder(
   drive: ReturnType<typeof google.drive>,
   parentFolderId: string,
-  subfolderName: string
+  subfolderPath: string
 ): Promise<string> {
-  const existing = await drive.files.list({
-    q: `name='${subfolderName}' and '${parentFolderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`,
-    supportsAllDrives: true,
-    includeItemsFromAllDrives: true,
-    fields: "files(id)",
-  });
+  let currentParentId = parentFolderId;
+  const paths = subfolderPath.split("/").filter(Boolean);
 
-  if (existing.data.files && existing.data.files.length > 0) {
-    return existing.data.files[0].id!;
+  for (const folderName of paths) {
+    const existing = await drive.files.list({
+      q: `name='${folderName}' and '${currentParentId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`,
+      supportsAllDrives: true,
+      includeItemsFromAllDrives: true,
+      fields: "files(id)",
+    });
+
+    if (existing.data.files && existing.data.files.length > 0) {
+      currentParentId = existing.data.files[0].id!;
+    } else {
+      const created = await drive.files.create({
+        supportsAllDrives: true,
+        requestBody: {
+          name: folderName,
+          mimeType: "application/vnd.google-apps.folder",
+          parents: [currentParentId],
+        },
+        fields: "id",
+      });
+      currentParentId = created.data.id!;
+    }
   }
 
-  const created = await drive.files.create({
-    supportsAllDrives: true,
-    requestBody: {
-      name: subfolderName,
-      mimeType: "application/vnd.google-apps.folder",
-      parents: [parentFolderId],
-    },
-    fields: "id",
-  });
-
-  return created.data.id!;
+  return currentParentId;
 }
 
 export async function POST(request: NextRequest) {
