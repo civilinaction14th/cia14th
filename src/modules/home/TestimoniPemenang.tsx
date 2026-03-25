@@ -15,7 +15,7 @@ export default function TestimoniPemenang() {
           height: "150%",
         }}
       />
-      <div className="absolute -top-40 z-0 md:-top-80 lg:-top-146 left-1/2 -translate-x-1/2 w-[104vw] pointer-events-none">
+      {/* <div className="absolute -top-40 z-0 md:-top-80 lg:-top-146 left-1/2 -translate-x-1/2 w-[104vw] pointer-events-none">
         <Image
           src="/home/testimoni/garis.webp"
           alt="Garis"
@@ -24,14 +24,14 @@ export default function TestimoniPemenang() {
           className="w-full h-auto"
           loading="lazy"
         />
-      </div>
+      </div> */}
 
       <Image
         src="/home/testimoni/fotosaku.webp"
         alt="Foto saku"
         width={4241}
         height={5642}
-        className="absolute md:top-40 lg:-top-40 md:right-10 right-0 w-[40%] lg:w-[45%] z-20 h-auto object-contain pointer-events-none"
+        className="absolute -top-10 md:top-40 lg:-top-40 md:right-10 right-0 w-[70%] lg:w-[45%] z-20 h-auto object-contain pointer-events-none"
         style={{ transform: "translate(35%, -5%)" }}
         loading="lazy"
         data-aos="fade-left"
@@ -52,7 +52,7 @@ export default function TestimoniPemenang() {
 
           <div className="flex flex-col items-center md:flex-row md:items-end gap-4">
             <div
-              className="relative aspect-1274/1569 w-40 md:w-70 shrink-0"
+              className="relative aspect-1274/1569 w-60 md:w-90 shrink-0"
               data-aos="zoom-in-up"
               data-aos-delay="200"
             >
@@ -93,7 +93,7 @@ export default function TestimoniPemenang() {
               </div>
 
               <div className="mt-4 md:mt-6 text-white text-base md:text-xl font-normal">
-                <p>- Abang Adit</p>
+                <p>- Juara 1</p>
                 <p className="font-bold mt-1">Institut Teknologi Bandung</p>
               </div>
             </div>

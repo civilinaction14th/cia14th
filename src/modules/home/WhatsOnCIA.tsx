@@ -43,7 +43,7 @@ export default function WhatsOnCIA() {
   ];
 
   return (
-    <section className="relative overflow-x-clip overflow-y-visible isolate">
+    <section className="relative overflow-x-clip overflow-y-visible isolate h-fit">
       {/* Flanel & Resleting */}
       <div className="relative w-full pb-10 md:pb-20 z-10">
         <div className="absolute top-0 md:top-20 left-1/2 -translate-x-1/2 w-[200%] md:w-full min-w-[750px] h-auto z-10 pointer-events-none">
@@ -66,7 +66,7 @@ export default function WhatsOnCIA() {
         </div>
       </div>
 
-      <div className="relative pb-40 min-h-screen z-[100] mt-4 md:mt-0">
+      <div className="relative pb-20 md:pb-40 min-h-screen z-[100] mt-4 md:mt-0">
         <div
           className="absolute inset-0 bg-contain bg-start z-0 pointer-events-none"
           style={{
