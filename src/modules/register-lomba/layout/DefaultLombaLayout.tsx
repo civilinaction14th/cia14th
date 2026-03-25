@@ -1,10 +1,9 @@
-import { Jeans } from "@/src/components/element/Jeans";
 import Image from "next/image";
 import React from "react";
 
 const DefaultLombaLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="relative min-h-screen background-auth w-full flex flex-col items-center overflow-x-hidden overflow-y-auto py-10 isolate">
+    <main className="relative min-h-screen background-auth w-full flex flex-col items-center overflow-hidden py-10 isolate">
       {/* Bunga 1 (Kiri Bawah) */}
       <div className="absolute bottom-0 left-0 w-50 h-50 md:w-62.5 md:h-62.5 lg:w-75 lg:h-75 z-5 pointer-events-none">
         <Image
@@ -26,7 +25,16 @@ const DefaultLombaLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </div>
 
-      <Jeans />
+      {/* Texture overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-start z-6 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/TextureBg.png')",
+          opacity: 0.48,
+          mixBlendMode: "soft-light",
+          height: "110%",
+        }}
+      />
       <div className="relative z-10 w-full px-4 md:px-8">{children}</div>
     </main>
   );
