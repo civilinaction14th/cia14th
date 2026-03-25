@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -39,10 +40,13 @@ export const useRegister = () => {
       // Handle custom error messages (misal: email sudah dipakai, password kurang dari 6 karakter)
       if (err.code === "auth/email-already-in-use") {
         setError("Email ini sudah terdaftar.");
+        toast.error("Email ini sudah terdaftar.");
       } else if (err.code === "auth/weak-password") {
         setError("Password terlalu lemah. Minimal 6 karakter.");
+        toast.error("Password terlalu lemah. Minimal 6 karakter.");
       } else {
         setError("Gagal mendaftar. Silakan coba lagi.");
+        toast.error("Gagal mendaftar. Silakan coba lagi.");
       }
     } finally {
       setIsLoading(false);

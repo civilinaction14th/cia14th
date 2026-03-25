@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { fcecValidationSchema, fileAcceptPdf } from "../../helper/validation";
 import InputField from "./InputField";
 import DropdownField from "./DropdownField";
 import FileUploadField from "./FileUploadField";
@@ -9,6 +12,8 @@ import Button from "./Button";
 import FormContainer from "./FormContainer";
 import Text from "../elements/Text";
 import { useRegisterLomba } from "@/src/utils/hooks/useRegisterLomba";
+import { useDraftGuard } from "@/src/utils/hooks/useDraftGuard";
+import Modal from "@/src/components/element/Modal";
 import { useRouter } from "next/navigation";
 
 interface FCECFormValues {
@@ -19,12 +24,12 @@ interface FCECFormValues {
   namaAnggota2: string;
   emailKetua: string;
   nomorWhatsApp: string;
+  idLine: string;
   ktpFile: File | null;
   pasFotoFile: File | null;
   orisinalitasFile: File | null;
   siswaAktifFile: File | null;
   twibbonFile: File | null;
-  pembayaranFile: File | null;
   judulAbstrak: string;
   subtema: string;
   abstrakFile: File | null;
@@ -36,17 +41,27 @@ export default function FCECLombaForm() {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<FCECFormValues>({
     defaultValues: {
+      namaTim: "",
+      asalSekolah: "",
+      namaKetua: "",
+      namaAnggota1: "",
+      namaAnggota2: "",
+      emailKetua: "",
+      nomorWhatsApp: "",
+      idLine: "",
+      judulAbstrak: "",
+      subtema: "",
       ktpFile: null,
       pasFotoFile: null,
       orisinalitasFile: null,
       siswaAktifFile: null,
       twibbonFile: null,
-      pembayaranFile: null,
       abstrakFile: null,
     },
+    resolver: zodResolver(fcecValidationSchema)
   });
 
   const {
@@ -56,17 +71,28 @@ export default function FCECLombaForm() {
     success,
   } = useRegisterLomba();
 
+  const { showModal, confirmDiscard, cancelDiscard } = useDraftGuard(isDirty);
+
   const onSubmit = async (data: FCECFormValues) => {
-    console.log("Submit FCEC Form:", data);
+    // Combine WhatsApp and Line ID back together for the backend
+    const combinedContact = `${data.nomorWhatsApp} / ${data.idLine}`;
+    
+    const finalData = {
+      ...data,
+      nomorWhatsApp: combinedContact,
+    };
+    
+    console.log("Submit FCEC Form:", finalData);
 
     // Panggil helper fetch dengan nama lomba "FCEC"
-    const response = await submitLomba("FCEC", data);
+    const response = await submitLomba("FCEC", finalData as any);
 
     if (response.success) {
-      // route pindah ke halaman success
-      router.push("/registrasi-lomba/success");
+      sessionStorage.setItem("registrasi-success", "fcec");
+      // route pindah ke halaman success fcec
+      router.push("/registrasi-lomba/fcec/success");
     } else {
-      alert(`Gagal: ${response.message}`);
+      toast.error(response.message);
     }
   };
 
@@ -147,13 +173,18 @@ export default function FCECLombaForm() {
           })}
         />
         <InputField
-          label="Nomor WhatsApp & ID Line Ketua Tim"
+          label="Nomor WhatsApp Ketua Tim"
           required
-          placeholder="Contoh: 08123456789 (Line: idline)"
+          placeholder="Contoh: 08123456789"
           error={errors.nomorWhatsApp?.message}
-          {...register("nomorWhatsApp", {
-            required: "Nomor kontak wajib diisi",
-          })}
+          {...register("nomorWhatsApp")}
+        />
+        <InputField
+          label="ID Line Ketua Tim"
+          required
+          placeholder="Masukkan ID Line"
+          error={errors.idLine?.message}
+          {...register("idLine")}
         />
       </div>
 
@@ -171,10 +202,12 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Kartu Identitas"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Kartu Identitas (.pdf)"
               value={field.value}
               onChange={field.onChange}
-              error={errors.ktpFile?.message}
+              error={errors.ktpFile?.message as string}
             />
           )}
         />
@@ -187,10 +220,12 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="PAS Foto"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_PAS Foto (.pdf)"
               value={field.value}
               onChange={field.onChange}
-              error={errors.pasFotoFile?.message}
+              error={errors.pasFotoFile?.message as string}
             />
           )}
         />
@@ -203,10 +238,12 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Surat Pernyataan Orisinalitas"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Surat Pernyataan Orisinalitas (.pdf)"
               value={field.value}
               onChange={field.onChange}
-              error={errors.orisinalitasFile?.message}
+              error={errors.orisinalitasFile?.message as string}
             />
           )}
         />
@@ -219,10 +256,12 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Surat Pernyataan Siswa Aktif"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Surat Pernyataan Siswa Aktif (.pdf)"
               value={field.value}
               onChange={field.onChange}
-              error={errors.siswaAktifFile?.message}
+              error={errors.siswaAktifFile?.message as string}
             />
           )}
         />
@@ -235,29 +274,17 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Bukti Posting Twibbon"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Bukti Posting Twibbon (.pdf)"
               value={field.value}
               onChange={field.onChange}
-              error={errors.twibbonFile?.message}
+              error={errors.twibbonFile?.message as string}
             />
           )}
         />
 
-        <Controller
-          name="pembayaranFile"
-          control={control}
-          rules={{ required: "File wajib diunggah" }}
-          render={({ field }) => (
-            <FileUploadField
-              label="Bukti Pembayaran"
-              required
-              description="Format penamaan file: Nama Tim_Bukti Pembayaran (.pdf)"
-              value={field.value}
-              onChange={field.onChange}
-              error={errors.pembayaranFile?.message}
-            />
-          )}
-        />
+       
       </div>
 
       {/* --- PENGUMPULAN ABSTRAK --- */}
@@ -300,27 +327,19 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Unggah Abstrak"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_File Abstrak (.pdf)"
               value={field.value}
               onChange={field.onChange}
-              error={errors.abstrakFile?.message}
+              error={errors.abstrakFile?.message as string}
             />
           )}
         />
       </div>
 
       {/* --- SUBMIT BUTTON --- */}
-      {apiError && (
-        <p className="text-red-600 text-center font-bold text-sm bg-red-100 p-2 rounded-md">
-          {apiError}
-        </p>
-      )}
 
-      {success && (
-        <p className="text-green-600 text-center font-bold text-sm bg-green-100 p-2 rounded-md">
-          Pendaftaran berhasil!
-        </p>
-      )}
 
       <div className="flex justify-center pt-8">
         <Button
@@ -331,6 +350,16 @@ export default function FCECLombaForm() {
           Submit
         </Button>
       </div>
+
+      <Modal
+        isOpen={showModal}
+        onClose={cancelDiscard}
+        title="Buang Draft?"
+        description="Data Anda akan hilang jika Anda pergi dari halaman ini."
+        confirmText="Buang"
+        cancelText="Batal"
+        onConfirm={confirmDiscard}
+      />
     </FormContainer>
   );
 }

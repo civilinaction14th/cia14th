@@ -8,6 +8,7 @@ const InputField = ({
   onChange,
   icon,
   name,
+  errorText,
 }: {
   title: string;
   placeholder: string;
@@ -16,6 +17,7 @@ const InputField = ({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   icon?: React.ReactNode;
   name?: string;
+  errorText?: string;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -28,8 +30,8 @@ const InputField = ({
       <label className="font-publicas text-white text-base md:text-lg">
         {title}
       </label>
-      <div className="flex items-center gap-3 border-b border-white pb-2 w-full relative">
-        {icon && <span className="text-white/80 shrink-0">{icon}</span>}
+      <div className={`flex items-center gap-3 border-b pb-2 w-full relative ${errorText ? "border-red-400" : "border-white"}`}>
+        {icon && <span className="shrink-0 text-white/80">{icon}</span>}
         <input
           type={inputType}
           name={name}
@@ -83,6 +85,9 @@ const InputField = ({
           </button>
         )}
       </div>
+      {errorText && (
+        <p className="text-red-400 text-xs font-poppins mt-0.5">{errorText}</p>
+      )}
     </div>
   );
 };

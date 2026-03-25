@@ -6,6 +6,7 @@ import LombaTabBar from "./layout/LombaTabBar";
 import { useSearchParams } from "next/navigation";
 import GeneralLombaForm from "./components/form/GeneralLombaForm";
 import FCECLombaForm from "./components/form/FCECLombaForm";
+import LoadingPage from "@/src/components/layouts/LoadingPage";
 
 const RegistrasiLombaContent = () => {
   const searchParams = useSearchParams();
@@ -30,9 +31,7 @@ export default function RegistrasiLomba() {
     <DefaultLombaLayout>
       <Suspense
         fallback={
-          <div className="text-white text-center py-20 font-poppins animate-pulse">
-            Memuat formulir...
-          </div>
+          <LoadingPage text="Memuat formulir..." />
         }
       >
         <RegistrasiLombaContent />

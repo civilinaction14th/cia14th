@@ -1,30 +1,53 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/auth-context";
 import RegistrasiLomba from "@/src/modules/register-lomba/RegistrasiLomba";
+import DefaultAuthLayout from "@/src/modules/auth/layout/DefaultAuthLayout";
+import LoadingPage from "@/src/components/layouts/LoadingPage";
+import { Suspense, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
+import { events, getCurrentDate, isEventOpen } from "@/src/modules/events/data/eventData";
 
-export default function RegistrasiLombaPage() {
+function RegistrasiLombaPageContent() {
   const { currentUser, loading } = useAuth();
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+  const lomba = searchParams.get("lomba") || "cic";
+
   useEffect(() => {
-    if (!loading && !currentUser) {
-      router.replace("/auth/login");
+    if (!loading) {
+      if (!currentUser) {
+        router.replace("/auth/login");
+        return;
+      }
+
+      // Guard: Cek apakah lomba ini masih open
+      const event = events.find((e) => e.id === lomba);
+      const now = getCurrentDate();
+      if (!event || !isEventOpen(event, now)) {
+        const eventName = event ? event.name : "Kompetisi";
+        router.push(`/events?error=closed&eventName=${encodeURIComponent(eventName)}`);
+      }
     }
-  }, [loading, currentUser, router]);
+  }, [loading, currentUser, router, lomba]);
 
   if (loading || !currentUser) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#4B3122]">
-        <div className="flex flex-col items-center gap-3 text-white font-poppins animate-pulse">
-          <p className="text-xl font-bold">Memuat halaman...</p>
-        </div>
-      </div>
+      <DefaultAuthLayout>
+        <LoadingPage />
+      </DefaultAuthLayout>
     );
   }
 
   // Jika sudah login, tampilkan halaman form pendaftaran utamanya
   return <RegistrasiLomba />;
+}
+
+export default function RegistrasiLombaPage() {
+  return (
+    <Suspense fallback={<LoadingPage />}>
+      <RegistrasiLombaPageContent />
+    </Suspense>
+  );
 }

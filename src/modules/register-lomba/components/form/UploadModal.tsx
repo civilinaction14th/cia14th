@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useDropzone, FileRejection } from "react-dropzone";
 import { FiUploadCloud, FiX } from "react-icons/fi";
 import { cn } from "@/src/utils/helpers/cn";
@@ -24,6 +25,16 @@ const UploadModal = ({
   );
   const [localError, setLocalError] = useState("");
   const [progress, setProgress] = useState(currentValue ? 100 : 0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Kunci background biar gabisa discroll
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   // Fake upload progress animation untuk UX
   useEffect(() => {
@@ -93,10 +104,12 @@ const UploadModal = ({
     .map((ext) => ext.replace(".", "").toUpperCase())
     .join(", ");
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 p-4">
+  if (!mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md px-4 py-8">
       {/* Container Modal */}
-      <div className="bg-white rounded-3xl p-6 md:p-10 w-full max-w-xl flex flex-col items-center relative shadow-2xl">
+      <div className="bg-white rounded-3xl p-6 md:p-10 w-full max-w-xl max-h-[90vh] overflow-y-auto flex flex-col items-center relative shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
         {/* Tombol X Close */}
         <button
           onClick={onClose}
@@ -209,7 +222,8 @@ const UploadModal = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 

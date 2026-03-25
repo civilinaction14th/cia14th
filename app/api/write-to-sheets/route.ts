@@ -17,6 +17,7 @@ const FCEC_HEADERS = [
   "Timestamp",
   "User ID",
   "Competition",
+  "Gelombang",
   "Nama Tim",
   "Asal Sekolah",
   "Nama Ketua",
@@ -42,6 +43,8 @@ const GENERAL_HEADERS = [
   "Timestamp",
   "User ID",
   "Competition",
+  "Gelombang",
+  "Asal Universitas",
   "Nama Tim",
   "Nama Ketua",
   "Email Ketua",
@@ -121,6 +124,7 @@ function formatFCECData(data: RegistrationData): string[] {
     data.createdAt || new Date().toISOString(),
     data.userId || "",
     data.competition || "",
+    data.gelombang || "",
     data.namaTim || "",
     data.asalSekolah || "",
     data.namaKetua || "",
@@ -150,6 +154,8 @@ function formatGeneralData(data: RegistrationData): string[] {
     data.createdAt || new Date().toISOString(),
     data.userId || "",
     data.competition || "",
+    data.gelombang || "",
+    data.asalUniversitas || "",
     data.namaTim || "",
     data.namaKetua || "",
     data.emailKetua || "",
@@ -165,11 +171,21 @@ function formatGeneralData(data: RegistrationData): string[] {
   ];
 }
 
-function formatDataToRow(data: RegistrationData): string[] {
-  if (data.competition === "FCEC") {
-    return formatFCECData(data);
+function sanitizeCell(value: any): any {
+  if (typeof value === "string" && /^[=+\-@]/.test(value)) {
+    return `'${value}`;
   }
-  return formatGeneralData(data);
+  return value;
+}
+
+function formatDataToRow(data: RegistrationData): string[] {
+  let row;
+  if (data.competition === "FCEC") {
+    row = formatFCECData(data);
+  } else {
+    row = formatGeneralData(data);
+  }
+  return row.map(sanitizeCell);
 }
 
 async function appendRowToSheet(
