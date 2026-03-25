@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 
 import { AOSProvider } from "@/src/utils/providers/AOSProvider";
+import ToasterProvider from "@/src/utils/providers/ToasterProvider";
 import {
   PublicaRegular,
   PublicaMedium,
@@ -35,11 +36,11 @@ export default function RootLayout({
           poppins.variable,
           PublicaRegular.variable,
           PublicaMedium.variable,
-          PublicaBold.variable,
-          "antialiased",
+          "antialiased"
         )}
       >
         <AOSProvider>
+          <ToasterProvider />
           <AuthProvider>{children}</AuthProvider>
         </AOSProvider>
       </body>
