@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { events, getActiveWave } from "@/src/modules/events/data/eventData";
 import {
   collection,
   addDoc,
@@ -95,12 +96,32 @@ export const useRegisterLomba = () => {
         }
       }
 
-      // -- 4. Pisahkan Form Data Biasa dengan File Object --
+      // -- 4. Hitung Gelombang Pendaftaran --
+      const eventInfo = events.find((e) => e.id.toUpperCase() === compKey);
+      let gelombangName = "Tanpa Gelombang";
+
+      if (eventInfo) {
+        const active = getActiveWave(eventInfo);
+        if (active) {
+          const lowerLabel = active.label.toLowerCase();
+          if (lowerLabel === "dibuka") {
+            gelombangName = "Normal";
+          } else if (lowerLabel === "diperpanjang") {
+            gelombangName = "Extended";
+          } else {
+            gelombangName = active.label; // e.g. "Gelombang 1"
+          }
+        }
+      }
+
+      // -- 5. Pisahkan Form Data Biasa dengan File Object --
       const uploadedDocs: Record<string, string> = {};
       const textData: Record<string, any> = {};
 
       const teamName = data.namaTim || data.teamName || "Tanpa_Nama_Tim";
-      const subfolderName = `${compKey}_${teamName}`;
+      // Bikin path bertingkat: CIC/Gelombang 1/CIC_TimA_1234
+      const uniqueId = `${compKey}_${teamName}_${Date.now()}`;
+      const subfolderName = `${compKey}/${gelombangName}/${uniqueId}`;
 
       const entries = Object.entries(data);
       for (const [key, value] of entries) {
@@ -120,9 +141,10 @@ export const useRegisterLomba = () => {
         }
       }
 
-      // -- 5. Submit Data ke Google Sheets 
+      // -- 6. Submit Data ke Google Sheets 
       const sheetsData = {
         competition: compKey,
+        gelombang: gelombangName,
         userId,
         createdAt: new Date().toISOString(),
         ...textData,
@@ -145,9 +167,10 @@ export const useRegisterLomba = () => {
         );
       }
 
-      // -- 6. Submit Teks dan Drive Links ke Firestore 
+      // -- 7. Submit Teks dan Drive Links ke Firestore 
       const firestoreData = {
         competition: compKey,
+        gelombang: gelombangName,
         userId,
         createdAt: serverTimestamp(),
         ...textData,
@@ -160,7 +183,19 @@ export const useRegisterLomba = () => {
       return { success: true, message: "Berhasil registrasi!" };
     } catch (err: any) {
       console.error("Error submitting lomba:", err);
-      const errorMessage = err.message || "Terjadi kesalahan pada server.";
+      let errorMessage = err.message || "Terjadi kesalahan pada server.";
+      
+      const lowerErr = errorMessage.toLowerCase();
+      if (lowerErr.includes("failed to fetch") || lowerErr.includes("network error")) {
+        errorMessage = "Koneksi terputus. Pastikan internet Anda stabil lalu coba lagi.";
+      } else if (lowerErr.includes("500") || lowerErr.includes("internal server error")) {
+        errorMessage = "Sistem kami sedang sibuk. Silakan tunggu sebentar dan coba lagi.";
+      } else if (lowerErr.includes("timeout")) {
+        errorMessage = "Waktu unggah terlalu lama. Pastikan ukuran file tidak kebesaran atau coba lagi.";
+      } else if (lowerErr.includes("fetcherror") && lowerErr.includes("failed")) {
+        errorMessage = "Gagal terhubung ke API kami. Pastikan perangkat Anda terkoneksi internet.";
+      }
+
       setError(errorMessage);
       return { success: false, message: errorMessage };
     } finally {

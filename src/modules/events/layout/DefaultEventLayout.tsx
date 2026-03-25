@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const DefaultLombaLayout = ({ children }: { children: React.ReactNode }) => {
+const DefaultEventLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="relative min-h-screen background-auth w-full flex flex-col items-center overflow-hidden py-10 isolate">
       {/* Bunga 1 (Kiri Bawah) */}
@@ -40,4 +40,4 @@ const DefaultLombaLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DefaultLombaLayout;
+export default DefaultEventLayout;

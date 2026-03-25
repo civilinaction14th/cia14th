@@ -3,25 +3,44 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import DefaultAuthLayout from "../layout/DefaultAuthLayout";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import { useLogin } from "@/src/utils/hooks/useLogin";
+import {
+  loginSchema,
+  validateForm,
+  type FieldErrors,
+} from "../helper/authValidation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  
+  const searchParams = useSearchParams();
+  const showLoginWarning = searchParams.get("message") === "login_required";
 
   const { loginWithEmail, loginWithGoogle, isLoading, error } = useLogin();
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const result = validateForm(loginSchema, { email, password });
+
+    if (!result.success) {
+      setFieldErrors(result.errors);
+      return;
+    }
+
+    setFieldErrors({});
     await loginWithEmail(email, password);
   };
 
   return (
     <DefaultAuthLayout>
-      <div className="flex flex-col md:flex-row items-center justify-center md:justify-between min-h-screen px-4 w-full gap-0 md:gap-18">
+      <div className="flex flex-col md:flex-row items-center justify-center md:justify-between h-full overflow-y-auto px-4 w-full gap-0 md:gap-18">
         {/* --- KOLOM KIRI (LOGO) --- */}
         <div className="flex flex-col items-center justify-center w-full lg:w-1/2">
           <Image
@@ -43,12 +62,18 @@ const Login = () => {
         {/* --- KOLOM KANAN (FORM LOGIN) --- */}
         <div className="w-full lg:w-1/2 flex items-center justify-center">
           <div className="w-full max-w-md bg-transparent p-6 md:p-0 ">
+            {showLoginWarning && (
+              <div className="bg-amber-500/20 border border-amber-500 text-amber-100 px-4 py-3 rounded-xl text-sm font-poppins mb-6">
+                <strong>Perhatian:</strong> Anda harus masuk terlebih dahulu untuk mengakses Pendaftaran Lomba.
+              </div>
+            )}
+            
             <div className="flex flex-col items-center md:items-start gap-2">
               <h1 className="text-5xl md:text-4xl font-bold text-white font-publicas mb-2 text-center md:text-left">
                 Masuk
               </h1>
               <p className="text-sm md:text-base text-gray-300 font-poppins mb-8 text-center md:text-left">
-                Jika kamu belum memiliki akun, <br /> kamu dapat{" "}
+                Jika Anda belum memiliki akun, <br /> Anda dapat{" "}
                 <Link
                   href="/auth/register"
                   className="text-white font-bold underline hover:text-amber-400 transition-colors"
@@ -60,11 +85,16 @@ const Login = () => {
 
             <form onSubmit={handleEmailAuth} className="space-y-6">
               <InputField
-                title="Username/Email"
+                title="Email"
                 type="email"
                 placeholder="Masukkan alamat emailmu"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (fieldErrors.email)
+                    setFieldErrors((prev) => ({ ...prev, email: undefined }));
+                }}
+                errorText={fieldErrors.email}
                 icon={
                   <svg
                     width="20"
@@ -87,7 +117,15 @@ const Login = () => {
                 type="password"
                 placeholder="Masukkan passwordmu disini"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (fieldErrors.password)
+                    setFieldErrors((prev) => ({
+                      ...prev,
+                      password: undefined,
+                    }));
+                }}
+                errorText={fieldErrors.password}
                 icon={
                   <svg
                     width="20"
@@ -105,12 +143,6 @@ const Login = () => {
                 }
               />
 
-              {error && (
-                <div className="bg-red-500/20 border border-red-500 text-red-100 px-4 py-3 rounded-xl text-sm font-poppins">
-                  {error}
-                </div>
-              )}
-
               <div className="pt-4">
                 <Button type="submit" isLoading={isLoading}>
                   Login
@@ -118,16 +150,11 @@ const Login = () => {
               </div>
             </form>
 
-            <div className="flex items-center gap-4 my-6">
-              <div className="flex-1 h-px bg-white/20" />
-              <span className="text-sm text-gray-400 font-poppins">atau</span>
-              <div className="flex-1 h-px bg-white/20" />
-            </div>
-
             <Button
               type="button"
               onClick={loginWithGoogle}
               disabled={isLoading}
+              className="mt-5"
               icon={
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none">
                   <path
