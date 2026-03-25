@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const formulirLinks = [
-  { label: "Registrasi peserta CIC", href: "/registrasi-lomba?comp=cic" },
-  { label: "Registrasi peserta FCEC", href: "/registrasi-lomba?comp=fcec" },
-  { label: "Registrasi peserta SBC", href: "/registrasi-lomba?comp=sbc" },
-  { label: "Registrasi peserta ITC", href: "/registrasi-lomba?comp=itc" },
+  { label: "Registrasi peserta CIC", href: "/registrasi-lomba/cic" },
+  { label: "Registrasi peserta FCEC", href: "/registrasi-lomba/fcec" },
+  { label: "Registrasi peserta SBC", href: "/registrasi-lomba/sbc" },
+  { label: "Registrasi peserta ITC", href: "/registrasi-lomba/itc" },
 ];
 
 const socials = [
