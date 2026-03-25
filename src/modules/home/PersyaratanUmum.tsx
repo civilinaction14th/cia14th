@@ -113,7 +113,7 @@ export default function PersyaratanUmum() {
                 data-aos="fade-up"
                 data-aos-delay={400 + index * 150}
               >
-                <h3 className="mb-1 font-publicas text-lg font-bold leading-snug md:text-2xl">
+                <h3 className="mb-1 font-publicas text-lg font-bold leading-snug md:text-2xl ml-2 md:ml-0">
                   {item.title}
                 </h3>
                 <ul className="list-disc space-y-1 pl-5 text-sm font-normal leading-relaxed marker:text-[#8D2D2D] md:space-y-1.5 md:text-lg md:leading-normal lg:text-xl">

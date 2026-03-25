@@ -1,4 +1,3 @@
-import { Jeans } from "@/src/components/element/Jeans";
 import DefaultLayout from "@/src/components/layouts/DefaultLayout";
 import Image from "next/image";
 import { BordirCard } from "@/src/components/element/BordirCard";
@@ -8,48 +7,55 @@ const contacts = [
   {
     cabang: "CIC",
     detail: [
-      { name: "Prabowo Subianto", whatsapp: "081346158069", line: "naiwaaa" },
+      { name: "Kautsaura Raisa Mulia", whatsapp: "085727119216", line: "kautsaura" },
       {
-        name: "Gibran Rakabuming Raka",
-        whatsapp: "081346158069",
-        line: "naiwaaa",
+        name: "Anisa Salsabila",
+        whatsapp: "081918786065",
+        line: "ann.archieve",
       },
     ],
   },
   {
     cabang: "SBC",
     detail: [
-      { name: "Prabowo Subianto", whatsapp: "081346158069", line: "naiwaaa" },
+      { name: "M. Chairul Nusantara", whatsapp: "081311783896", line: "@24042006_" },
       {
-        name: "Gibran Rakabuming Raka",
-        whatsapp: "081346158069",
-        line: "naiwaaa",
+        name: "Zafira Wanashita",
+        whatsapp: "082324568500",
+        line: "zafiraa28",
       },
     ],
   },
   {
     cabang: "FCEC",
     detail: [
-      { name: "Prabowo Subianto", whatsapp: "081346158069", line: "naiwaaa" },
+      { name: "Denting", whatsapp: "08813997545", line: "dentingpc" },
       {
-        name: "Gibran Rakabuming Raka",
-        whatsapp: "081346158069",
-        line: "naiwaaa",
+        name: "Ardina",
+        whatsapp: "087753687396",
+        line: "ardinacahaya",
       },
     ],
   },
   {
     cabang: "ITC",
     detail: [
-      { name: "Prabowo Subianto", whatsapp: "081346158069", line: "naiwaaa" },
+      { name: "Nabila Octavia Savitri", whatsapp: "0895392347946", line: "scbyllz" },
       {
-        name: "Gibran Rakabuming Raka",
-        whatsapp: "081346158069",
-        line: "naiwaaa",
+        name: "Tiwi Destarani Putri",
+        whatsapp: "081528224183",
+        line: "tiiwayy",
       },
     ],
   },
 ];
+
+const labelBgByCabang: Record<string, string> = {
+  CIC: "bg-[#F0B040]",
+  SBC: "bg-[#E05020]",
+  FCEC: "bg-[#0070B0]",
+  ITC: "bg-[#00A86B]",
+};
 
 export default function InformasiLanjut() {
   return (
@@ -71,7 +77,7 @@ export default function InformasiLanjut() {
         alt="Batik Infinite"
         width={1524}
         height={1670}
-        className="absolute bottom-20 -right-12 md:-right-24 w-[35%] md:w-[20%] z-2"
+        className="absolute bottom-16 -right-10 z-2 w-[45%] md:bottom-20 md:-right-24 md:w-[20%]"
         loading="lazy"
         data-aos="fade-left"
         data-aos-duration="1000"
@@ -81,7 +87,7 @@ export default function InformasiLanjut() {
         alt="Polygon"
         width={1447}
         height={1352}
-        className="absolute top-0 -right-12 md:-right-24 w-[35%] md:w-[20%] z-3"
+        className="absolute top-0 -right-10 z-3 w-[45%] md:-right-24 md:w-[20%]"
         loading="lazy"
         data-aos="fade-down-left"
         data-aos-delay="200"
@@ -98,10 +104,10 @@ export default function InformasiLanjut() {
       </div>
 
       <DefaultLayout>
-        <div className="relative w-full md:w-[70%] lg:w-[50%] z-12 mx-auto">
+        <div className="relative z-12 mx-auto w-[94%] md:w-[70%] lg:w-[50%]">
           <h2
-            className="text-2xl md:text-4xl lg:text-5xl z-13 font-bold font-poppins drop-shadow-md text-white text-center relative z-10 -mb-6"
-            style={{ WebkitTextStroke: "2px #F2A23A" }}
+            className="relative z-12 -mb-4 text-center font-poppins text-2xl font-bold text-white drop-shadow-md md:-mb-6 md:text-4xl lg:text-5xl"
+            style={{ WebkitTextStroke: "1.5px #F2A23A" }}
             data-aos="fade-up"
           >
             Informasi Lanjut
@@ -112,7 +118,7 @@ export default function InformasiLanjut() {
             alt="Holder Dompet"
             width={668}
             height={218}
-            className="absolute -bottom-8 md:-bottom-8 left-12 md:left-10 w-[35%] md:w-[20%] h-auto z-[-1]"
+            className="absolute -bottom-8 left-10 z-[-1] hidden h-auto w-[20%] md:block"
             style={{ transform: "translate(-10%, 10%)" }}
             loading="lazy"
             data-aos="zoom-in-up"
@@ -123,18 +129,19 @@ export default function InformasiLanjut() {
             bg="bg-linear-to-b from-[#1F4B66] to-[#0E2A3A]"
             bordirColor="#BAA687"
             bordirWidth="thick"
+            className="mx-auto w-full"
             data-aos="zoom-in-up"
             data-aos-delay="300"
           >
             {contacts.map((item, index) => (
               <div
                 key={item.cabang}
-                className="w-full flex flex-col items-center gap-4"
+                className="mb-8 flex w-full flex-col items-center gap-4 px-1 last:mb-0 sm:px-2 md:px-0"
                 data-aos="fade-up"
                 data-aos-delay={400 + index * 150}
               >
                 <BordirLabel
-                  bg="bg-[#B0704C]"
+                  bg={labelBgByCabang[item.cabang] ?? "bg-[#B0704C]"}
                   bordirColor="#F3E6CF"
                   bordirWidth="default"
                   className="text-white font-bold font-poppins text-base md:text-lg shadow-md"
@@ -142,19 +149,19 @@ export default function InformasiLanjut() {
                   {item.cabang}
                 </BordirLabel>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 md:gap-x-12 w-full mt-4">
+                <div className="mt-0 grid w-full grid-cols-1 gap-y-6 px-2 sm:gap-x-8 sm:px-3 md:grid-cols-2 md:gap-x-12 md:gap-y-8 md:px-0">
                   {item.detail.map((person) => (
-                    <div key={person.name} className="text-white">
-                      <p className="font-bold text-lg md:text-xl">
+                    <div key={`${item.cabang}-${person.name}`} className="pl-1 text-white md:pl-0 text-center md:text-left">
+                      <p className="text-base font-bold leading-snug md:text-xl">
                         {person.name}
                       </p>
-                      <p className="text-base font-normal mt-1">
-                        <span className="inline-block w-24">WhatsApp</span>
+                      <p className="mt-1 text-sm font-normal md:text-base">
+                        <span className="inline-block w-20 md:w-24">WhatsApp</span>
                         <span className="mx-1">:</span>
                         {person.whatsapp}
                       </p>
-                      <p className="text-base font-normal">
-                        <span className="inline-block w-24">ID Line</span>
+                      <p className="text-sm font-normal md:text-base">
+                        <span className="inline-block w-20 md:w-24">ID Line</span>
                         <span className="mx-1">:</span>
                         {person.line}
                       </p>
@@ -166,7 +173,7 @@ export default function InformasiLanjut() {
           </BordirCard>
         </div>
       </DefaultLayout>
-      <div className="relative -mt-40 md:-mt-80 lg:-mt-160 left-1/2 -translate-x-1/2 w-[104vw] z-0 pointer-events-none">
+      <div className="relative left-1/2 z-0 -mt-24 w-[104vw] -translate-x-1/2 pointer-events-none md:-mt-80 lg:-mt-160">
         <Image
           src="/home/informasi-lanjut/kota.webp"
           alt="Kota"
