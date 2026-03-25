@@ -2,16 +2,22 @@
 
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { generalValidationSchema, fileAcceptPdf } from "../../helper/validation";
 import InputField from "./InputField";
 import FileUploadField from "./FileUploadField";
 import Button from "./Button";
 import FormContainer from "./FormContainer";
 import Text from "../elements/Text";
 import { useRegisterLomba } from "@/src/utils/hooks/useRegisterLomba";
+import { useDraftGuard } from "@/src/utils/hooks/useDraftGuard";
+import Modal from "@/src/components/element/Modal";
 
 import { useRouter } from "next/navigation";
 
 interface GeneralFormValues {
+  asalUniversitas: string;
   namaTim: string;
   namaKetua: string;
   emailKetua: string;
@@ -41,15 +47,24 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<GeneralFormValues>({
     defaultValues: {
+      asalUniversitas: "",
+      namaTim: "",
+      namaKetua: "",
+      emailKetua: "",
+      dosenNama: "",
+      dosenNip: "",
+      dosenTelepon: "",
+      dosenEmail: "",
       biodataFile: null,
       ktmFile: null,
       twibbonFile: null,
       instagramFile: null,
       pembayaranFile: null,
     },
+    resolver: zodResolver(generalValidationSchema),
   });
 
   const {
@@ -59,6 +74,8 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
     success,
   } = useRegisterLomba();
 
+  const { showModal, confirmDiscard, cancelDiscard } = useDraftGuard(isDirty);
+
   const onSubmit = async (data: GeneralFormValues) => {
     console.log("Submit General Form for", lomba, ":", data);
 
@@ -66,10 +83,11 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
     const response = await submitLomba(lomba, data);
 
     if (response.success) {
-      // route pindah ke halaman success
-      router.push("/registrasi-lomba/success");
+      sessionStorage.setItem("registrasi-success", lomba);
+      // route pindah ke halaman success per lomba
+      router.push(`/registrasi-lomba/${lomba}/success`);
     } else {
-      alert(`Gagal: ${response.message}`);
+      toast.error(response.message);
     }
   };
 
@@ -90,6 +108,13 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
         <h3 className="font-publicas font-bold text-[#262626] text-lg uppercase tracking-wide">
           DATA KELOMPOK
         </h3>
+        <InputField
+          label="Asal Universitas"
+          required
+          placeholder="Masukkan asal universitas"
+          error={errors.asalUniversitas?.message}
+          {...register("asalUniversitas", { required: "Asal Universitas wajib diisi" })}
+        />
         <InputField
           label="Nama Tim"
           required
@@ -179,9 +204,11 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Biodata Tim"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
-              error={errors.biodataFile?.message}
+              error={errors.biodataFile?.message as string}
             />
           )}
         />
@@ -194,9 +221,11 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Kartu Tanda Mahasiswa (KTM)"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
-              error={errors.ktmFile?.message}
+              error={errors.ktmFile?.message as string}
             />
           )}
         />
@@ -209,9 +238,11 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Twibbon"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
-              error={errors.twibbonFile?.message}
+              error={errors.twibbonFile?.message as string}
             />
           )}
         />
@@ -224,9 +255,11 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Follow Instagram @civilinaction"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
-              error={errors.instagramFile?.message}
+              error={errors.instagramFile?.message as string}
             />
           )}
         />
@@ -239,27 +272,17 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Pembayaran"
               required
+              maxSizeMB={5}
+              accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
-              error={errors.pembayaranFile?.message}
+              error={errors.pembayaranFile?.message as string}
             />
           )}
         />
       </div>
 
       {/* --- SUBMIT BUTTON --- */}
-
-      {apiError && (
-        <p className="text-red-600 text-center font-bold text-sm bg-red-100 p-2 rounded-md">
-          {apiError}
-        </p>
-      )}
-
-      {success && (
-        <p className="text-green-600 text-center font-bold text-sm bg-green-100 p-2 rounded-md">
-          Pendaftaran berhasil!
-        </p>
-      )}
 
       <div className="flex justify-center pt-8">
         <Button
@@ -270,6 +293,16 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
           Submit
         </Button>
       </div>
+
+      <Modal
+        isOpen={showModal}
+        onClose={cancelDiscard}
+        title="Buang Draft?"
+        description="Data Anda akan hilang jika Anda pergi dari halaman ini."
+        confirmText="Buang"
+        cancelText="Batal"
+        onConfirm={confirmDiscard}
+      />
     </FormContainer>
   );
 }
