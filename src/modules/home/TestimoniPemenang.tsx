@@ -9,7 +9,7 @@ export default function TestimoniPemenang() {
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
         style={{
-          backgroundImage: "url('/images/TextureBg.png')",
+          backgroundImage: "url('/images/TextureBg.webp')",
           opacity: 0.48,
           mixBlendMode: "soft-light",
           height: "150%",
@@ -77,12 +77,7 @@ export default function TestimoniPemenang() {
                   &ldquo;
                 </span>
                 <p className="text-white text-base md:text-xl font-publicas text-justify pl-2">
-                  menurut gue, CIA kmrn memberikan pengalaman yang berharga dan
-                  kesan yang membekas. Jujur, ga ekspek sebenarnya akan banyak
-                  banget ilmu yang didapet dari CIC. Dari sisi acaranya pun,
-                  keliatan banget kalo CIA sangat well prepared makanya kerasa
-                  megah dan panitianya ramah-ramah. Bener-bener sesuatu yang
-                  akan gw ulang lagi.
+                  menurut gue, CIA kmrn memberikan pengalaman yang berharga dan kesan yang membekas. Jujur, ga ekspek sebenarnya akan banyak banget ilmu yang didapet dari CIC. Dari sisi acaranya pun, keliatan banget kalo CIA sangat well prepared makanya kerasa megah dan panitianya ramah-ramah. Bener-bener sesuatu yang akan gw ulang lagi.
                 </p>
                 <span
                   className="text-3xl md:text-5xl font-bold leading-none float-right -mt-2"
@@ -93,7 +88,7 @@ export default function TestimoniPemenang() {
               </div>
 
               <div className="mt-4 md:mt-6 text-white text-base md:text-xl font-normal">
-                <p>- Juara 1</p>
+                <p>Kuya Kuyi Hebat Sehat Kuat</p>
                 <p className="font-bold mt-1">Institut Teknologi Bandung</p>
               </div>
             </div>

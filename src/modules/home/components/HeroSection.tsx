@@ -19,7 +19,7 @@ export default function HeroSection() {
       {/* Title Image */}
       <div className="relative mb-0 mt-0 w-full max-w-xs sm:max-w-lg md:max-w-3xl lg:max-w-5xl">
         <Image
-          src="/images/CIA-title.png"
+          src="/images/CIA-title.webp"
           alt="14th Civil In Action"
           width={1100}
           height={300}

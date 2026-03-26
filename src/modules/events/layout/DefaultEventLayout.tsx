@@ -7,7 +7,7 @@ const DefaultEventLayout = ({ children }: { children: React.ReactNode }) => {
       {/* Bunga 1 (Kiri Bawah) */}
       <div className="absolute -bottom-25 -left-20 w-50 h-50 md:w-62.5 md:h-62.5 lg:w-75 lg:h-75 z-5 pointer-events-none animate-[spin_15s_linear_infinite]">
         <Image
-          src="/images/Star.svg"
+          src="/images/Star.webp"
           alt="Bunga1"
           fill
           className="object-contain object-bottom-left"
@@ -17,7 +17,7 @@ const DefaultEventLayout = ({ children }: { children: React.ReactNode }) => {
 
       <div className="absolute -top-5 -right-20 w-50 h-50 md:w-62.5 md:h-62.5 lg:w-75 lg:h-75 z-5 pointer-events-none animate-[spin_15s_linear_infinite]">
         <Image
-          src="/images/Star.svg"
+          src="/images/Star.webp"
           alt="Bunga2"
           fill
           className="object-contain object-top-right"
@@ -29,7 +29,7 @@ const DefaultEventLayout = ({ children }: { children: React.ReactNode }) => {
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
         style={{
-          backgroundImage: "url('/images/TextureBg.png')",
+          backgroundImage: "url('/images/TextureBg.webp')",
           opacity: 0.58,
           mixBlendMode: "soft-light",
           height: "150%",

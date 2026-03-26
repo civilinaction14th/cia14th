@@ -64,7 +64,7 @@ export default function InformasiLanjut() {
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
         style={{
-          backgroundImage: "url('/images/TextureBg.png')",
+          backgroundImage: "url('/images/TextureBg.webp')",
           opacity: 0.48,
           mixBlendMode: "soft-light",
           height: "110%",

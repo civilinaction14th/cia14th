@@ -163,7 +163,7 @@ export default function Navbar() {
         <div
           className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
           style={{
-            backgroundImage: "url('/images/TextureBg.png')",
+            backgroundImage: "url('/images/TextureBg.webp')",
             opacity: 0.9,
             mixBlendMode: "soft-light",
           }}
@@ -237,7 +237,7 @@ export default function Navbar() {
           <div
             className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
             style={{
-              backgroundImage: "url('/images/TextureBg.png')",
+              backgroundImage: "url('/images/TextureBg.webp')",
               opacity: 0.9,
               mixBlendMode: "soft-light",
             }}
