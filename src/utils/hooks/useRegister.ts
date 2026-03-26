@@ -2,10 +2,22 @@ import { useState } from "react";
 import { toast } from "sonner";
 import {
   createUserWithEmailAndPassword,
-  sendEmailVerification,
   signOut,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+
+/**
+ * Generate random verification token
+ */
+function generateToken(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let token = "";
+  for (let i = 0; i < 64; i++) {
+    token += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return token;
+}
 
 export const useRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,19 +29,36 @@ export const useRegister = () => {
     setIsLoading(true);
     setError(null);
     try {
-      if (!auth) throw new Error("Firebase tidak terinisialisasi");
+      if (!auth || !db) throw new Error("Firebase tidak terinisialisasi");
 
-      // Buat akun baru di Firebase
       const credential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password,
+        password
       );
 
-      // Kirim email verifikasi
-      await sendEmailVerification(credential.user);
+      const token = generateToken();
+      const expiresAt = new Date();
+      expiresAt.setHours(expiresAt.getHours() + 24);
 
-      // Langsung sign out karena user "harus" verifikasi email dulu sebelum bisa masuk
+      await setDoc(doc(db, "verificationTokens", token), {
+        email,
+        uid: credential.user.uid,
+        expiresAt: Timestamp.fromDate(expiresAt),
+        verified: false,
+        createdAt: Timestamp.now(),
+      });
+
+      const response = await fetch("/api/send-verification-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, token }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to send verification email");
+      }
+
       await signOut(auth);
 
       setUnverifiedEmail(email);
@@ -37,7 +66,6 @@ export const useRegister = () => {
     } catch (err: any) {
       console.error(err);
 
-      // Handle custom error messages (misal: email sudah dipakai, password kurang dari 6 karakter)
       if (err.code === "auth/email-already-in-use") {
         setError("Email ini sudah terdaftar.");
         toast.error("Email ini sudah terdaftar.");
