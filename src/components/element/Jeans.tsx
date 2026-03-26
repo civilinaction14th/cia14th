@@ -10,7 +10,7 @@ export const Jeans = () => {
       {[...Array(20)].map((_, i) => (
         <img
           key={i}
-          src="/images/TextureBg.png"
+          src="/images/TextureBg.webp"
           alt=""
           className={cn(
             "w-full h-auto opacity-[0.48] flex-shrink-0 -mt-[1px]",

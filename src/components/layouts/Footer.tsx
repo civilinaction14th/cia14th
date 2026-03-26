@@ -9,9 +9,21 @@ const formulirLinks = [
 ];
 
 const socials = [
-  { icon: "/footer/youtube.svg", alt: "YouTube", href: "#" },
-  { icon: "/footer/instagram.svg", alt: "Instagram", href: "#" },
-  { icon: "/footer/tiktok.svg", alt: "TikTok", href: "#" },
+  { 
+    icon: "/footer/youtube.svg", 
+    alt: "YouTube", 
+    href: "http://www.youtube.com/@civilinaction3399" 
+  },
+  { 
+    icon: "/footer/instagram.svg", 
+    alt: "Instagram", 
+    href: "https://www.instagram.com/civilinaction" 
+  },
+  { 
+    icon: "/footer/tiktok.svg", 
+    alt: "TikTok", 
+    href: "https://www.tiktok.com/@cia.ugm?_r=1&_t=ZS-94z59z7NTiX" 
+  },
 ];
 
 export default function Footer() {
@@ -77,15 +89,17 @@ export default function Footer() {
           {/* Social icons */}
           <div className="flex gap-4">
             {socials.map((s) => (
-              <Link
-                key={s.alt}
-                href={s.href}
-                aria-label={s.alt}
-                className="w-12 h-12 rounded-full border border-white flex items-center justify-center hover:bg-white/10 transition"
-              >
-                <Image src={s.icon} alt={s.alt} width={24} height={24} />
-              </Link>
-            ))}
+            <Link
+              key={s.alt}
+              href={s.href}
+              aria-label={s.alt}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 rounded-full border border-white flex items-center justify-center hover:bg-white/10 transition"
+            >
+              <Image src={s.icon} alt={s.alt} width={24} height={24} />
+            </Link>
+          ))}
           </div>
 
           {/* Copyright */}

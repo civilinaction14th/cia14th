@@ -43,7 +43,7 @@ export default function FloatingIcons() {
     animationStyle?: CSSProperties;
   }[] = [
     {
-      src: "/svg/FCEC.svg",
+      src: "/svg/FCEC.webp",
       alt: "FCEC Icon",
       width: isMobile ? 120 : isTablet ? 150 : 220,
       height: isMobile ? 120 : isTablet ? 150 : 220,
@@ -56,7 +56,7 @@ export default function FloatingIcons() {
             : { top: "20%", left: "10%" },
     },
     {
-      src: "/images/Star.svg",
+      src: "/images/Star.webp",
       alt: "Star Decoration",
       width: isMobile ? 195 : isTablet ? 250 : 350,
       height: isMobile ? 195 : isTablet ? 250 : 350,
@@ -69,7 +69,7 @@ export default function FloatingIcons() {
             : { top: "-12%", right: "-4%" },
     },
     {
-      src: "/svg/ITC.svg",
+      src: "/svg/ITC.webp",
       alt: "ITC Icon",
       width: isMobile ? 100 : isTablet ? 140 : 200,
       height: isMobile ? 100 : isTablet ? 140 : 200,
@@ -82,7 +82,7 @@ export default function FloatingIcons() {
             : { bottom: "-6%", left: "17%" },
     },
     {
-      src: "/svg/SBC.svg",
+      src: "/svg/SBC.webp",
       alt: "SBC Icon",
       width: isMobile ? 120 : isTablet ? 170 : 240,
       height: isMobile ? 120 : isTablet ? 170 : 240,
@@ -95,7 +95,7 @@ export default function FloatingIcons() {
             : { top: "28%", right: "8%" },
     },
     {
-      src: "/svg/CIC.svg",
+      src: "/svg/CIC.webp",
       alt: "CIC Icon",
       width: isMobile ? 100 : isTablet ? 150 : 220,
       height: isMobile ? 100 : isTablet ? 150 : 220,
@@ -108,7 +108,7 @@ export default function FloatingIcons() {
             : { bottom: "2%", right: "6%" },
     },
     {
-      src: "/svg/Line.svg",
+      src: "/svg/Line.webp",
       alt: "Line Decoration",
       width: isMobile ? 100 : isTablet ? 130 : 150,
       height: isMobile ? 100 : isTablet ? 130 : 150,
@@ -120,7 +120,7 @@ export default function FloatingIcons() {
             : { bottom: "-70%", left: "0%" },
     },
     {
-      src: "/images/fan.svg",
+      src: "/images/fan.webp",
       alt: "Fan Decoration",
       width: isMobile ? 225 : isTablet ? 280 : 385,
       height: isMobile ? 225 : isTablet ? 280 : 385,

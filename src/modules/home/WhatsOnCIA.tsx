@@ -70,7 +70,7 @@ export default function WhatsOnCIA() {
         <div
           className="absolute inset-0 bg-contain bg-start z-0 pointer-events-none"
           style={{
-            backgroundImage: "url('/images/TextureBg.png')",
+            backgroundImage: "url('/images/TextureBg.webp')",
             opacity: 0.48,
             mixBlendMode: "soft-light",
           }}

@@ -6,7 +6,8 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export const useLogin = () => {
@@ -21,16 +22,20 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
     try {
-      if (!auth) throw new Error("Firebase tidak terinisialisasi");
+      if (!auth || !db) throw new Error("Firebase tidak terinisialisasi");
       const credential = await signInWithEmailAndPassword(
         auth,
         email,
         password,
       );
 
-      // Wajib Verifikasi Email
-      if (!credential.user.emailVerified) {
-        await signOut(auth); // tendang (logout paksa)
+      // Wajib Verifikasi Email - cek dari Firestore verificationTokens
+      const tokensRef = collection(db, "verificationTokens");
+      const q = query(tokensRef, where("email", "==", email), where("verified", "==", true));
+      const tokenSnapshot = await getDocs(q);
+
+      if (tokenSnapshot.empty) {
+        await signOut(auth);
         throw { code: "custom/email-not-verified" };
       }
 
@@ -38,8 +43,6 @@ export const useLogin = () => {
       toast.success("Anda berhasil login!");
       router.push(callbackUrl || "/events");
     } catch (err: any) {
-      console.error(err);
-
       if (err.code === "custom/email-not-verified") {
         setError(
           "Silakan periksa inbox email Anda dan verifikasi email Anda terlebih dahulu.",
@@ -62,6 +65,7 @@ export const useLogin = () => {
           "Terlalu banyak percobaan gagal. Silakan coba lagi dalam 5-15 menit.",
         );
       } else {
+        console.error("Login error:", err);
         setError("Gagal masuk. Pastikan email dan password sudah benar.");
         toast.error("Gagal masuk. Pastikan email dan password sudah benar.");
       }
