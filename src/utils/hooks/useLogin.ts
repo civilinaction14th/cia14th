@@ -22,7 +22,7 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
     try {
-      if (!auth) throw new Error("Firebase tidak terinisialisasi");
+      if (!auth || !db) throw new Error("Firebase tidak terinisialisasi");
       const credential = await signInWithEmailAndPassword(
         auth,
         email,
