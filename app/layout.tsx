@@ -16,6 +16,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -75,17 +76,6 @@ export const metadata: Metadata = {
     description:
       "Kolaborasi Pembangunan Nusantara, Infrastruktur Tangguh Berdaya. Ikuti kompetisi teknik sipil nasional terbesar.",
     images: ["/images/Logo.webp"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
   icons: {
     icon: [
@@ -148,7 +138,7 @@ export default function RootLayout({
           poppins.variable,
           PublicaRegular.variable,
           PublicaMedium.variable,
-          "antialiased"
+          "antialiased",
         )}
       >
         <script
@@ -163,4 +153,3 @@ export default function RootLayout({
     </html>
   );
 }
-

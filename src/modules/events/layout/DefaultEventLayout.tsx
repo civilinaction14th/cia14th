@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const  DefaultEventLayout = ({ children }: { children: React.ReactNode }) => {
+const DefaultEventLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="relative min-h-screen bg-[linear-gradient(to_right,#0c1f31_47%,#0d334e_100%)] w-full flex flex-col items-center overflow-hidden py-10 isolate">
       {/* Bunga 1 (Kiri Bawah) */}
@@ -26,15 +26,15 @@ const  DefaultEventLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* Texture overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
-        style={{
-          backgroundImage: "url('/images/TextureBg.webp')",
-          opacity: 0.58,
-          mixBlendMode: "soft-light",
-          height: "150%",
-        }}
-      />
+      <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.58] mix-blend-soft-light overflow-hidden" style={{ height: "150%" }}>
+        <Image
+          src="/images/TextureBg.webp"
+          alt="Texture Background"
+          fill
+          className="object-cover object-left-top"
+          priority
+        />
+      </div>
       <div className="relative z-10 w-full px-4 md:px-8">{children}</div>
     </main>
   );

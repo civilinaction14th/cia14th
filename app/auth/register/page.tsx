@@ -4,7 +4,7 @@ import DefaultAuthLayout from "@/src/modules/auth/layout/DefaultAuthLayout";
 import LoadingPage from "@/src/components/layouts/LoadingPage";
 
 export const metadata = {
-  title: "Daftar - CIA 14th",
+  title: "Daftar | CIA 14th | Civil In Action",
 };
 
 export default function RegisterPage() {
