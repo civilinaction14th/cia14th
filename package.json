@@ -13,6 +13,7 @@
     "@react-email/components": "^1.0.10",
     "@react-email/render": "^2.0.4",
     "@types/aos": "^3.0.7",
+    "@vercel/analytics": "^2.0.1",
     "aos": "^2.3.4",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
