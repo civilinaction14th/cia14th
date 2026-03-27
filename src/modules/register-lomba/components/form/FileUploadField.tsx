@@ -21,7 +21,7 @@ const FileUploadField = ({
   error,
   value,
   onChange,
-  maxSizeMB = 5,
+  maxSizeMB = 3,
   accept = {
     "application/pdf": [".pdf"],
   },

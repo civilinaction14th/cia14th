@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
 const ACCEPTED_FILE_TYPES = [
   "application/pdf",
 ];
@@ -10,7 +10,7 @@ export const fileSchema = z
   .refine((file) => file !== null && file !== undefined, "File wajib diunggah")
   .refine(
     (file) => file instanceof File && file.size <= MAX_FILE_SIZE,
-    "Ukuran maksimal file adalah 5MB"
+    "Ukuran maksimal file adalah 3MB"
   )
   .refine(
     (file) => file instanceof File && ACCEPTED_FILE_TYPES.includes(file.type),
@@ -22,7 +22,7 @@ export const pdfOnlySchema = z
   .refine((file) => file !== null && file !== undefined, "File wajib diunggah")
   .refine(
     (file) => file instanceof File && file.size <= MAX_FILE_SIZE,
-    "Ukuran maksimal file adalah 5MB"
+    "Ukuran maksimal file adalah 3MB"
   )
   .refine(
     (file) => file instanceof File && file.type === "application/pdf",

@@ -202,7 +202,7 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Kartu Identitas"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Kartu Identitas (.pdf)"
               value={field.value}
@@ -220,7 +220,7 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="PAS Foto"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_PAS Foto (.pdf)"
               value={field.value}
@@ -238,7 +238,7 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Surat Pernyataan Orisinalitas"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Surat Pernyataan Orisinalitas (.pdf)"
               value={field.value}
@@ -256,7 +256,7 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Surat Pernyataan Siswa Aktif"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Surat Pernyataan Siswa Aktif (.pdf)"
               value={field.value}
@@ -274,7 +274,7 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Bukti Posting Twibbon"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_Bukti Posting Twibbon (.pdf)"
               value={field.value}
@@ -327,7 +327,7 @@ export default function FCECLombaForm() {
             <FileUploadField
               label="Unggah Abstrak"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               description="Format penamaan file: Nama Tim_File Abstrak (.pdf)"
               value={field.value}

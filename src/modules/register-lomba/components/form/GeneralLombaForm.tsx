@@ -204,7 +204,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Biodata Tim"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -221,7 +221,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Kartu Tanda Mahasiswa (KTM)"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -238,7 +238,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Twibbon"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -255,7 +255,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Follow Instagram @civilinaction"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -272,7 +272,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Pembayaran"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
