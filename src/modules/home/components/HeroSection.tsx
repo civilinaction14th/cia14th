@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 
 export default function HeroSection() {
   const { currentUser, loading } = useAuth();
-  
+
   const getDaftarLink = () => {
     if (loading) return "#";
     return currentUser ? "/events" : "/auth/login";
