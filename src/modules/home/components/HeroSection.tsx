@@ -9,7 +9,7 @@ export default function HeroSection() {
 
   const getDaftarLink = () => {
     if (loading) return "#";
-    return currentUser ? "/events" : "/auth/login";
+    return currentUser ? "/events" : "/auth/register";
   };
 
   return (

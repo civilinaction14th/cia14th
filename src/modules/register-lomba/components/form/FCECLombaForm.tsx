@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -12,8 +12,6 @@ import Button from "./Button";
 import FormContainer from "./FormContainer";
 import Text from "../elements/Text";
 import { useRegisterLomba } from "@/src/utils/hooks/useRegisterLomba";
-import { useDraftGuard } from "@/src/utils/hooks/useDraftGuard";
-import Modal from "@/src/components/element/Modal";
 import { useRouter } from "next/navigation";
 
 interface FCECFormValues {
@@ -35,7 +33,11 @@ interface FCECFormValues {
   abstrakFile: File | null;
 }
 
-export default function FCECLombaForm() {
+export default function FCECLombaForm({
+  onDirtyChange,
+}: {
+  onDirtyChange: (isDirty: boolean) => void;
+}) {
   const router = useRouter();
   const {
     register,
@@ -71,7 +73,9 @@ export default function FCECLombaForm() {
     success,
   } = useRegisterLomba();
 
-  const { showModal, confirmDiscard, cancelDiscard } = useDraftGuard(isDirty);
+  useEffect(() => {
+    onDirtyChange(isDirty);
+  }, [isDirty, onDirtyChange]);
 
   const onSubmit = async (data: FCECFormValues) => {
     // Combine WhatsApp and Line ID back together for the backend
@@ -350,16 +354,6 @@ export default function FCECLombaForm() {
           Submit
         </Button>
       </div>
-
-      <Modal
-        isOpen={showModal}
-        onClose={cancelDiscard}
-        title="Buang Draft?"
-        description="Data Anda akan hilang jika Anda pergi dari halaman ini."
-        confirmText="Buang"
-        cancelText="Batal"
-        onConfirm={confirmDiscard}
-      />
     </FormContainer>
   );
 }

@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function TestimoniPemenang() {
   return (
     <section className="relative overflow-visible [clip-path:inset(-40rem_0_0_0)] isolate">
-    {/* Texture overlay */}
+      {/* Texture overlay */}
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
         style={{
@@ -77,7 +77,12 @@ export default function TestimoniPemenang() {
                   &ldquo;
                 </span>
                 <p className="text-white text-base md:text-xl font-publicas text-justify pl-2">
-                  menurut gue, CIA kmrn memberikan pengalaman yang berharga dan kesan yang membekas. Jujur, ga ekspek sebenarnya akan banyak banget ilmu yang didapet dari CIC. Dari sisi acaranya pun, keliatan banget kalo CIA sangat well prepared makanya kerasa megah dan panitianya ramah-ramah. Bener-bener sesuatu yang akan gw ulang lagi.
+                  menurut gue, CIA kmrn memberikan pengalaman yang berharga dan
+                  kesan yang membekas. Jujur, ga ekspek sebenarnya akan banyak
+                  banget ilmu yang didapet dari CIC. Dari sisi acaranya pun,
+                  keliatan banget kalo CIA sangat well prepared makanya kerasa
+                  megah dan panitianya ramah-ramah. Bener-bener sesuatu yang
+                  akan gw ulang lagi.
                 </p>
                 <span
                   className="text-3xl md:text-5xl font-bold leading-none float-right -mt-2"

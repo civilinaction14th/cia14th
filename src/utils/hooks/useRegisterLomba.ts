@@ -209,19 +209,20 @@ export const useRegisterLomba = () => {
 
       await Promise.all([
         fetch("/api/write-to-sheets", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(sheetsData),
-          }).then(async (res) => {
-            if (!res.ok) {
-              const err = await res.json().catch(() => ({}));
-              throw new Error(
-                err.error || "Gagal menyimpan data ke Google Sheets."
-              );
-            }
-          }),
-        addDoc(collection(db, "registrations"), firestoreData)
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(sheetsData),
+        }).then(async (res) => {
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || "Gagal menyimpan data ke Google Sheets.");
+          }
+        }),
+        addDoc(collection(db, "registrations"), firestoreData),
       ]);
+
+      // Update cache status
+      sessionStorage.setItem(`reg-status-${compKey}-${userId}`, "true");
 
       setSuccess(true);
       return { success: true, message: "Berhasil registrasi!" };
@@ -247,10 +248,43 @@ export const useRegisterLomba = () => {
     }
   };
 
+  const checkIsRegistered = async (competition: string) => {
+    if (!auth?.currentUser || !db) return false;
+    const compKey = competition.toUpperCase();
+    const userId = auth.currentUser.uid;
+    
+    // Optimasi: Cek cache di sessionStorage agar tidak hit API terus-menerus
+    const cacheKey = `reg-status-${compKey}-${userId}`;
+    const cachedStatus = sessionStorage.getItem(cacheKey);
+    if (cachedStatus !== null) {
+      return cachedStatus === "true";
+    }
+
+    const byUser = await getDocs(
+      query(
+        collection(db, "registrations"),
+        where("competition", "==", compKey),
+        where("userId", "==", userId),
+      ),
+    );
+
+    const isRegistered = !byUser.empty;
+    sessionStorage.setItem(cacheKey, isRegistered ? "true" : "false");
+    return isRegistered;
+  };
+
   const resetState = () => {
     setError(null);
     setSuccess(false);
   };
 
-  return { submitLomba, isLoading, error, success, resetState, setError };
+  return {
+    submitLomba,
+    checkIsRegistered,
+    isLoading,
+    error,
+    success,
+    resetState,
+    setError,
+  };
 };
