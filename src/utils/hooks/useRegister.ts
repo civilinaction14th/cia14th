@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 
@@ -11,7 +8,8 @@ import { auth, db } from "@/lib/firebase";
  * Generate random verification token
  */
 function generateToken(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let token = "";
   for (let i = 0; i < 64; i++) {
     token += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -49,7 +47,7 @@ export const useRegister = () => {
       const credential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       const token = generateToken();
