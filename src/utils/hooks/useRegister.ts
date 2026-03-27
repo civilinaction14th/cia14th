@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  createUserWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 
@@ -11,7 +8,8 @@ import { auth, db } from "@/lib/firebase";
  * Generate random verification token
  */
 function generateToken(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let token = "";
   for (let i = 0; i < 64; i++) {
     token += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -19,22 +17,37 @@ function generateToken(): string {
   return token;
 }
 
+/**
+ * Custom Hook untuk menangani proses Registrasi (pembuatan akun baru).
+ * Merangkum proses pemebentukan akun di Auth, lalu pengiriman email Verifikasi,
+ * dan langsung logout paksa agar pengguna verifikasi terlebih dahulu lewat email.
+ */
 export const useRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [unverifiedEmail, setUnverifiedEmail] = useState("");
 
+  /**
+   * Fungsi Registrasi menggunakan Email dan Password baru
+   *
+   * @param email - Alamat email yang ingin didaftarkan.
+   * @param password - Kata sandi yang diinginkan (minimal panjangnya 6 karakter dari policy firebase).
+   */
   const registerWithEmail = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
     try {
       if (!auth || !db) throw new Error("Firebase tidak terinisialisasi");
 
+      // ==========================================
+      // 1. BUAT KREDENSIAL AKUN FIREBASE
+      // ==========================================
+      // Buat akun baru di Firebase menggunakan Auth provider bawaan
       const credential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       const token = generateToken();
@@ -57,8 +70,13 @@ export const useRegister = () => {
 
       if (!response.ok) {
         console.error("Failed to send verification email");
+        toast.error(
+          "Gagal mengirim email verifikasi. Silakan coba lagi nanti.",
+        );
+        setError("Gagal mengirim email verifikasi. Silakan coba lagi nanti.");
       }
 
+      // Langsung sign out karena user "harus" verifikasi email dulu sebelum bisa masuk
       await signOut(auth);
 
       setUnverifiedEmail(email);
@@ -66,6 +84,10 @@ export const useRegister = () => {
     } catch (err: any) {
       console.error(err);
 
+      // ==========================================
+      // 3. HANDLING ERROR MESSAGES
+      // ==========================================
+      // Translasi error code firebase menjadi bahasa Indonesia agar mudah dipahami user
       if (err.code === "auth/email-already-in-use") {
         setError("Email ini sudah terdaftar.");
         toast.error("Email ini sudah terdaftar.");

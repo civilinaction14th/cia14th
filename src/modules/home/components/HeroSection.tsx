@@ -1,7 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
 
 export default function HeroSection() {
+  const { currentUser, loading } = useAuth();
+
+  const getDaftarLink = () => {
+    if (loading) return "#";
+    return currentUser ? "/events" : "/auth/register";
+  };
+
   return (
     <section className="flex flex-col items-center justify-center h-screen pb-24 text-center px-4">
       {/* Center Emblem */}
@@ -37,16 +47,16 @@ export default function HeroSection() {
       {/* CTA Buttons */}
       <div className="flex items-center gap-4">
         <Link
-          href="#"
+          href="#informasi-lanjut"
           className="px-8 md:px-12 py-2 border-2 border-dashed border-white text-white text-[10px] sm:text-md md:text-lg font-medium hover:bg-white/10 transition-colors rounded-xl"
         >
-          Masuk
+          Kontak Kami
         </Link>
         <Link
-          href="#"
+          href={getDaftarLink()}
           className="px-8 md:px-12 py-2 bg-white border-2 border-white text-black text-[10px] sm:text-md md:text-lg font-bold transition-colors shadow-lg rounded-xl"
         >
-          Daftar Sekarang !
+          Daftar Sekarang!
         </Link>
       </div>
     </section>

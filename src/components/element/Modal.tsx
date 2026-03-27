@@ -87,14 +87,16 @@ export default function Modal({
           {/* Action buttons */}
           <div className="flex items-center justify-end gap-3 pt-2">
             {/* Ghost cancel button */}
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-5 py-2.5 font-poppins font-bold text-sm text-[#8D2D2D] rounded-md 
-                hover:bg-[#8D2D2D]/10 transition-all duration-200 cursor-pointer active:scale-95"
-            >
-              {cancelText}
-            </button>
+            {cancelText && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-5 py-2.5 font-poppins font-bold text-sm text-[#8D2D2D] rounded-md 
+                  hover:bg-[#8D2D2D]/10 transition-all duration-200 cursor-pointer active:scale-95"
+              >
+                {cancelText}
+              </button>
+            )}
 
             {/* Primary confirm button — same style as Button.tsx */}
             <button

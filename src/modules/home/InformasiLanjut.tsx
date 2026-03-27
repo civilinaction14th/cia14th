@@ -7,7 +7,11 @@ const contacts = [
   {
     cabang: "CIC",
     detail: [
-      { name: "Kautsaura Raisa Mulia", whatsapp: "085727119216", line: "kautsaura" },
+      {
+        name: "Kautsaura Raisa Mulia",
+        whatsapp: "085727119216",
+        line: "kautsaura",
+      },
       {
         name: "Anisa Salsabila",
         whatsapp: "081918786065",
@@ -18,7 +22,11 @@ const contacts = [
   {
     cabang: "SBC",
     detail: [
-      { name: "M. Chairul Nusantara", whatsapp: "081311783896", line: "@24042006_" },
+      {
+        name: "M. Chairul Nusantara",
+        whatsapp: "081311783896",
+        line: "@24042006_",
+      },
       {
         name: "Zafira Wanashita",
         whatsapp: "082324568500",
@@ -40,7 +48,11 @@ const contacts = [
   {
     cabang: "ITC",
     detail: [
-      { name: "Nabila Octavia Savitri", whatsapp: "0895392347946", line: "scbyllz" },
+      {
+        name: "Nabila Octavia Savitri",
+        whatsapp: "0895392347946",
+        line: "scbyllz",
+      },
       {
         name: "Tiwi Destarani Putri",
         whatsapp: "081528224183",
@@ -59,7 +71,10 @@ const labelBgByCabang: Record<string, string> = {
 
 export default function InformasiLanjut() {
   return (
-    <section className="relative overflow-hidden [clip-path:inset(-40rem_0_0_0)] isolate">
+    <section
+      id="informasi-lanjut"
+      className="relative overflow-hidden [clip-path:inset(-40rem_0_0_0)] isolate"
+    >
       {/* Texture overlay */}
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
@@ -70,7 +85,6 @@ export default function InformasiLanjut() {
           height: "110%",
         }}
       />
-      
 
       <Image
         src="/home/informasi-lanjut/batik-infinite.webp"
@@ -151,17 +165,24 @@ export default function InformasiLanjut() {
 
                 <div className="mt-0 grid w-full grid-cols-1 gap-y-6 px-2 sm:gap-x-8 sm:px-3 md:grid-cols-2 md:gap-x-12 md:gap-y-8 md:px-0">
                   {item.detail.map((person) => (
-                    <div key={`${item.cabang}-${person.name}`} className="pl-1 text-white md:pl-0 text-center md:text-left">
+                    <div
+                      key={`${item.cabang}-${person.name}`}
+                      className="pl-1 text-white md:pl-0 text-center md:text-left"
+                    >
                       <p className="text-base font-bold leading-snug md:text-xl">
                         {person.name}
                       </p>
                       <p className="mt-1 text-sm font-normal md:text-base">
-                        <span className="inline-block w-20 md:w-24">WhatsApp</span>
+                        <span className="inline-block w-20 md:w-24">
+                          WhatsApp
+                        </span>
                         <span className="mx-1">:</span>
                         {person.whatsapp}
                       </p>
                       <p className="text-sm font-normal md:text-base">
-                        <span className="inline-block w-20 md:w-24">ID Line</span>
+                        <span className="inline-block w-20 md:w-24">
+                          ID Line
+                        </span>
                         <span className="mx-1">:</span>
                         {person.line}
                       </p>

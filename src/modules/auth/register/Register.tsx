@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import DefaultAuthLayout from "../layout/DefaultAuthLayout";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import Modal from "@/src/components/element/Modal";
+import { isGlobalRegistrationClosed } from "@/src/modules/events/data/eventData";
 import { useRegister } from "@/src/utils/hooks/useRegister";
 import { useLogin } from "@/src/utils/hooks/useLogin";
 import {
@@ -15,16 +18,33 @@ import {
 } from "../helper/authValidation";
 
 const Register = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [showClosedModal, setShowClosedModal] = useState(false);
 
   const { registerWithEmail, isLoading, error, isSuccess, unverifiedEmail } =
     useRegister();
   const { loginWithGoogle } = useLogin();
 
+  useEffect(() => {
+    // Check if registration globally closed and in production
+    const isProd = String(process.env.NEXT_PUBLIC_PRODUCTION).trim() === "true";
+    if (isProd && isGlobalRegistrationClosed()) {
+      setShowClosedModal(true);
+    }
+  }, []);
+
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check if registration globally closed and in production
+    const isProd = String(process.env.NEXT_PUBLIC_PRODUCTION).trim() === "true";
+    if (isProd && isGlobalRegistrationClosed()) {
+      setShowClosedModal(true);
+      return;
+    }
 
     const result = validateForm(registerSchema, { email, password });
 
@@ -35,6 +55,17 @@ const Register = () => {
 
     setFieldErrors({});
     await registerWithEmail(email, password);
+  };
+
+  const handleGoogleAuth = async () => {
+    // Check if registration globally closed and in production
+    const isProd = String(process.env.NEXT_PUBLIC_PRODUCTION).trim() === "true";
+    if (isProd && isGlobalRegistrationClosed()) {
+      setShowClosedModal(true);
+      return;
+    }
+    
+    await loginWithGoogle();
   };
 
   return (
@@ -157,7 +188,7 @@ const Register = () => {
 
             <Button
               type="button"
-              onClick={loginWithGoogle}
+              onClick={handleGoogleAuth}
               disabled={isLoading}
               className="mt-5"
               icon={
@@ -186,6 +217,16 @@ const Register = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={showClosedModal}
+        onClose={() => router.push("/")}
+        title="Registrasi Ditutup"
+        description="Mohon maaf, periode pendaftaran untuk Civil in Action 14 telah berakhir. Nantikan kami di tahun depan!"
+        confirmText="Kembali ke Beranda"
+        cancelText=""
+        onConfirm={() => router.push("/")}
+      />
     </DefaultAuthLayout>
   );
 };

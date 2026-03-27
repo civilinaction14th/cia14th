@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -11,9 +11,6 @@ import Button from "./Button";
 import FormContainer from "./FormContainer";
 import Text from "../elements/Text";
 import { useRegisterLomba } from "@/src/utils/hooks/useRegisterLomba";
-import { useDraftGuard } from "@/src/utils/hooks/useDraftGuard";
-import Modal from "@/src/components/element/Modal";
-
 import { useRouter } from "next/navigation";
 
 interface GeneralFormValues {
@@ -38,7 +35,13 @@ const LOMBA_MAP: Record<string, string> = {
   itc: "Innovation Technology Competition 2026",
 };
 
-export default function GeneralLombaForm({ lomba }: { lomba: string }) {
+export default function GeneralLombaForm({
+  lomba,
+  onDirtyChange,
+}: {
+  lomba: string;
+  onDirtyChange: (isDirty: boolean) => void;
+}) {
   const router = useRouter();
   const lombaTitle =
     LOMBA_MAP[lomba?.toLowerCase()] || "Civil Innovation Challenge 2026";
@@ -74,7 +77,9 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
     success,
   } = useRegisterLomba();
 
-  const { showModal, confirmDiscard, cancelDiscard } = useDraftGuard(isDirty);
+  useEffect(() => {
+    onDirtyChange(isDirty);
+  }, [isDirty, onDirtyChange]);
 
   const onSubmit = async (data: GeneralFormValues) => {
     console.log("Submit General Form for", lomba, ":", data);
@@ -204,7 +209,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Biodata Tim"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -221,7 +226,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Kartu Tanda Mahasiswa (KTM)"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -238,7 +243,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Twibbon"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -255,7 +260,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Follow Instagram @civilinaction"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -272,7 +277,7 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
             <FileUploadField
               label="Bukti Pembayaran"
               required
-              maxSizeMB={5}
+              maxSizeMB={3}
               accept={fileAcceptPdf}
               value={field.value}
               onChange={field.onChange}
@@ -293,16 +298,6 @@ export default function GeneralLombaForm({ lomba }: { lomba: string }) {
           Submit
         </Button>
       </div>
-
-      <Modal
-        isOpen={showModal}
-        onClose={cancelDiscard}
-        title="Buang Draft?"
-        description="Data Anda akan hilang jika Anda pergi dari halaman ini."
-        confirmText="Buang"
-        cancelText="Batal"
-        onConfirm={confirmDiscard}
-      />
     </FormContainer>
   );
 }

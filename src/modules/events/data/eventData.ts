@@ -132,6 +132,17 @@ export function getCurrentDate(): Date {
   return new Date();
 }
 
+// Helper: cek apakah pendaftaran seluruh event telah ditutup 
+// (untuk memblokir pembuatan akun baru di halaman register)
+export function isGlobalRegistrationClosed(now: Date = getCurrentDate()): boolean {
+  return events.every((event) => {
+    const lastClose = getLastCloseDate(event);
+    const lastCloseEnd = new Date(lastClose);
+    lastCloseEnd.setHours(23, 59, 59, 999);
+    return now > lastCloseEnd;
+  });
+}
+
 export function formatDate(date: Date): string {
   return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }

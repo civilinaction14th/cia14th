@@ -4,6 +4,7 @@ import { useDropzone, FileRejection } from "react-dropzone";
 import { FiUploadCloud, FiX } from "react-icons/fi";
 import { cn } from "@/src/utils/helpers/cn";
 import Button from "./Button";
+import { toast } from "sonner"; // Tambahkan import toast
 
 export interface UploadModalProps {
   onClose: () => void;
@@ -74,13 +75,16 @@ const UploadModal = ({
 
       if (fileRejections.length > 0) {
         const rejection = fileRejections[0];
+        let errorMsg = rejection.errors[0].message;
+
         if (rejection.errors[0].code === "file-too-large") {
-          setLocalError(`Ukuran file terlalu besar. Maksimal ${maxSizeMB} MB.`);
+          errorMsg = `Ukuran file terlalu besar. Maksimal ${maxSizeMB} MB.`;
         } else if (rejection.errors[0].code === "file-invalid-type") {
-          setLocalError("Format file tidak didukung.");
-        } else {
-          setLocalError(rejection.errors[0].message);
+          errorMsg = "Format file tidak didukung.";
         }
+
+        setLocalError(errorMsg);
+        toast.error(errorMsg); // Tampilkan toast error merah
         return;
       }
 
@@ -143,13 +147,6 @@ const UploadModal = ({
             Supported format: {supportedFormats}. Maks: {maxSizeMB} MB
           </p>
         </div>
-
-        {/* Error Message Modal */}
-        {localError && (
-          <p className="text-red-500 text-sm font-poppins mt-3 text-center bg-red-50 px-4 py-2 rounded-md w-full border border-red-200">
-            {localError}
-          </p>
-        )}
 
         {/* Indikator File / Uploading Box */}
         {selectedFile && (

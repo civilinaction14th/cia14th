@@ -9,8 +9,8 @@ const pdfFile = z
     "Hanya file PDF yang diizinkan"
   )
   .refine(
-    (files) => files[0]?.size <= 5 * 1024 * 1024,
-    "Ukuran file maksimal 5MB"
+    (files) => files[0]?.size <= 3 * 1024 * 1024,
+    "Ukuran file maksimal 3MB"
   );
 
 export const generalFormSchema = z.object({
