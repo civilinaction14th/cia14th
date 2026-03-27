@@ -16,11 +16,6 @@ export default function RegistrasiLombaSlugPage() {
 
   useEffect(() => {
     if (!loading) {
-      if (!currentUser) {
-        router.replace(`/auth/login?message=login_required&callbackUrl=/registrasi-lomba/${slug}`);
-        return;
-      }
-
       // Guard: Cek apakah event ini masih open
       const event = events.find((e) => e.id === slug);
       const now = getCurrentDate();
@@ -29,9 +24,9 @@ export default function RegistrasiLombaSlugPage() {
         router.replace(`/events?error=closed&eventName=${encodeURIComponent(eventName)}`);
       }
     }
-  }, [loading, currentUser, router, slug]);
+  }, [loading, router, slug]);
 
-  if (loading || !currentUser) {
+  if (loading) {
     return (
       <DefaultAuthLayout>
         <LoadingPage />

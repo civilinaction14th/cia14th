@@ -14,6 +14,7 @@ import Modal from "@/src/components/element/Modal";
 import { useAuth } from "@/lib/auth-context";
 import { useRegisterLomba } from "@/src/utils/hooks/useRegisterLomba";
 import Success from "./Success";
+import { UdahDaftarLombaLainModal } from "./components/elements/UdahDaftarLombaLainModal";
 
 const VALID_SLUGS = ["cic", "sbc", "fcec", "itc"];
 
@@ -29,8 +30,9 @@ export default function RegistrasiLombaSlug({
   const [isDirty, setIsDirty] = useState(false);
 
   const { currentUser, loading: authLoading } = useAuth();
-  const { checkIsRegistered } = useRegisterLomba();
+  const { checkIsRegistered, checkHasRegisteredAnyLomba } = useRegisterLomba();
   const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
+  const [hasRegisteredOther, setHasRegisteredOther] = useState(false);
   const [checkingRegistration, setCheckingRegistration] = useState(true);
 
   const {
@@ -45,13 +47,18 @@ export default function RegistrasiLombaSlug({
       if (!authLoading && currentUser) {
         const registered = await checkIsRegistered(lomba);
         setIsRegistered(registered);
+
+        if (!registered) {
+          const hasAny = await checkHasRegisteredAnyLomba();
+          setHasRegisteredOther(hasAny);
+        }
         setCheckingRegistration(false);
       } else if (!authLoading && !currentUser) {
         setCheckingRegistration(false);
       }
     };
     checkStatus();
-  }, [authLoading, currentUser, lomba, checkIsRegistered]);
+  }, [authLoading, currentUser, lomba, checkIsRegistered, checkHasRegisteredAnyLomba]);
 
   if (!VALID_SLUGS.includes(lomba)) {
     return (
@@ -85,6 +92,22 @@ export default function RegistrasiLombaSlug({
             <div className="flex flex-col items-center justify-center py-20 text-white/50 animate-pulse">
               Memuat data pendaftaran...
             </div>
+          ) : hasRegisteredOther && !isRegistered ? (
+            <div className="flex flex-col items-center justify-center py-20 text-white/70 font-poppins text-center bg-[#8D2D2D]/20 rounded-xl border border-white/10 backdrop-blur-sm">
+              <p className="text-lg font-bold">Akses Dibatasi</p>
+              <p className="text-sm opacity-80 mt-1">Anda sudah terdaftar di cabang lomba lain dalam Civil in Action 14th.</p>
+            </div>
+          ) : !currentUser ? (
+            <div className="flex flex-col items-center justify-center py-20 text-white/70 font-poppins text-center bg-[#8D2D2D]/20 rounded-xl border border-white/10 backdrop-blur-sm px-4">
+              <p className="text-lg font-bold">Login Diperlukan</p>
+              <p className="text-sm opacity-80 mt-1 mb-6">Silakan login untuk dapat melakukan pendaftaran lomba.</p>
+              <button 
+                onClick={() => router.push(`/auth/login?callbackUrl=/registrasi-lomba/${lomba}`)}
+                className="bg-[#8D2D2D] text-white px-8 py-2.5 rounded-lg font-bold hover:bg-[#722020] transition-colors shadow-lg cursor-pointer active:scale-95 duration-200"
+              >
+                Login Sekarang
+              </button>
+            </div>
           ) : lomba === "fcec" ? (
             <FCECLombaForm onDirtyChange={setIsDirty} />
           ) : (
@@ -101,6 +124,11 @@ export default function RegistrasiLombaSlug({
         confirmText="Buang"
         cancelText="Batal"
         onConfirm={confirmDiscard}
+      />
+
+      <UdahDaftarLombaLainModal
+        isOpen={!checkingRegistration && hasRegisteredOther && !isRegistered}
+        onClose={() => router.push("/events")}
       />
     </DefaultLombaLayout>
   );

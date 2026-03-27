@@ -90,13 +90,12 @@ export const useRegisterLomba = () => {
       const byUser = await getDocs(
         query(
           collection(db, "registrations"),
-          where("competition", "==", compKey),
           where("userId", "==", userId),
         ),
       );
 
       if (!byUser.empty) {
-        throw new Error(`Akun Anda sudah terdaftar untuk lomba ${compKey}.`);
+        throw new Error(`Anda sudah terdaftar di cabang lomba lain. Setiap peserta hanya diperbolehkan mendaftar satu cabang lomba.`);
       }
 
       // -- Cek duplikasi Nama Tim --
@@ -273,6 +272,27 @@ export const useRegisterLomba = () => {
     return isRegistered;
   };
 
+  const checkHasRegisteredAnyLomba = async () => {
+    if (!auth?.currentUser || !db) return false;
+    const userId = auth.currentUser.uid;
+
+    const cacheKey = `reg-status-any-${userId}`;
+    const cachedStatus = sessionStorage.getItem(cacheKey);
+    if (cachedStatus !== null) {
+      return cachedStatus === "true";
+    }
+
+    const q = query(
+      collection(db, "registrations"),
+      where("userId", "==", userId),
+    );
+    const querySnapshot = await getDocs(q);
+
+    const hasRegistered = !querySnapshot.empty;
+    sessionStorage.setItem(cacheKey, hasRegistered ? "true" : "false");
+    return hasRegistered;
+  };
+
   const resetState = () => {
     setError(null);
     setSuccess(false);
@@ -281,6 +301,7 @@ export const useRegisterLomba = () => {
   return {
     submitLomba,
     checkIsRegistered,
+    checkHasRegisteredAnyLomba,
     isLoading,
     error,
     success,
