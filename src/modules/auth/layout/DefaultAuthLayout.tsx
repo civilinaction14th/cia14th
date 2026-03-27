@@ -5,19 +5,18 @@ const DefaultAuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="relative min-h-screen background-auth w-full flex flex-col items-center justify-center overflow-hidden pt-[80px] pb-10 isolate">
       {/* Bunga 1 (Kiri Bawah) */}
-      <div className="absolute bottom-0 left-0 w-50 h-50 md:w-62.5 md:h-62.5 lg:w-75 lg:h-75 z-5 pointer-events-none">
+      <div className="absolute -bottom-25 -left-20 w-50 h-50 md:w-62.5 md:h-62.5 lg:w-75 lg:h-75 z-5 pointer-events-none animate-[spin_25s_linear_infinite]">
         <Image
-          src="/auth/Bunga1.webp"
+          src="/images/Star.webp"
           alt="Bunga1"
           fill
           className="object-contain object-bottom-left"
           priority
         />
       </div>
-
-      <div className="absolute top-0 right-0 w-50 h-50 md:w-62.5 md:h-62.5 lg:w-75 lg:h-75 z-5 pointer-events-none">
+      <div className="absolute -top-5 -right-20 w-50 h-50 md:w-62.5 md:h-62.5 lg:w-75 lg:h-75 z-5 pointer-events-none animate-[spin_25s_linear_infinite]">
         <Image
-          src="/auth/Bunga2.webp"
+          src="/images/Star.webp"
           alt="Bunga2"
           fill
           className="object-contain object-top-right"
