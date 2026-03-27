@@ -14,12 +14,12 @@ import { auth, db } from "@/lib/firebase"; // Pastikan path firebase sesuai
 async function uploadToDrive(
   file: File,
   fileName: string,
-  subfolderName: string,
+  parentFolderId: string,
 ): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("fileName", fileName);
-  formData.append("subfolderName", subfolderName);
+  formData.append("targetFolderId", parentFolderId);
 
   const res = await fetch("/api/upload-drive", {
     method: "POST",
@@ -28,11 +28,32 @@ async function uploadToDrive(
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `Gagal mengupload file ${fileName}`);
+    throw new Error(err.error || `Gagal mengupload file: ${fileName}`);
   }
 
   const data = await res.json();
   return data.fileUrl as string;
+}
+
+/**
+ * Helper function untuk memastikan Folder terbentuk dengan benar HANYA 1 KALI.
+ */
+async function createDriveFolder(subfolderName: string): Promise<string> {
+  const res = await fetch("/api/create-drive-folder", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ subfolderName }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Gagal membuat folder tim di Drive`);
+  }
+
+  const data = await res.json();
+  return data.folderId;
 }
 
 export const useRegisterLomba = () => {
@@ -76,6 +97,24 @@ export const useRegisterLomba = () => {
 
       if (!byUser.empty) {
         throw new Error(`Akun Anda sudah terdaftar untuk lomba ${compKey}.`);
+      }
+
+      // -- Cek duplikasi Nama Tim --
+      const inputTeamName = data.teamName || data.namaTim || "";
+      if (inputTeamName) {
+        const byTeamName = await getDocs(
+          query(
+            collection(db, "registrations"),
+            where("competition", "==", compKey),
+            where("teamName", "==", inputTeamName),
+          ),
+        );
+        
+        if (!byTeamName.empty) {
+          throw new Error(
+            `Nama tim "${inputTeamName}" sudah terdaftar untuk lomba ${compKey}. Silakan gunakan nama tim lain.`,
+          );
+        }
       }
 
       // -- 3. Cek Duplikasi Berdasarkan Email Ketua --
@@ -123,23 +162,30 @@ export const useRegisterLomba = () => {
       const uniqueId = `${compKey}_${teamName}_${Date.now()}`;
       const subfolderName = `${compKey}/${gelombangName}/${uniqueId}`;
 
+      const targetFolderId = await createDriveFolder(subfolderName);
+      const uploadPromises: Promise<void>[] = [];
+
       const entries = Object.entries(data);
       for (const [key, value] of entries) {
         if (value instanceof File) {
-          // File diupload satu per satu sesuai nama key-nya (misal: abstrakFile.pdf)
-          // Berhubung form kita sekarang hanya PDF, kita append string '.pdf' agar spesifik
           const cleanFileName = value.name.endsWith(".pdf")
             ? value.name
             : `${key}.pdf`;
-          uploadedDocs[key] = await uploadToDrive(
+
+          const uploadTask = uploadToDrive(
             value,
             cleanFileName,
-            subfolderName,
-          );
+            targetFolderId,
+          ).then((url) => {
+            uploadedDocs[key] = url;
+          });
+          uploadPromises.push(uploadTask);
         } else if (value !== null && value !== undefined && value !== "") {
           textData[key] = value;
         }
       }
+
+      await Promise.all(uploadPromises);
 
       // -- 6. Submit Data ke Google Sheets 
       const sheetsData = {
@@ -151,23 +197,7 @@ export const useRegisterLomba = () => {
         documents: uploadedDocs,
       };
 
-      const sheetsResponse = await fetch("/api/write-to-sheets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sheetsData),
-      });
-
-      if (!sheetsResponse.ok) {
-        const sheetsError = await sheetsResponse.json().catch(() => ({}));
-        throw new Error(
-          sheetsError.error ||
-            "Gagal menyimpan data ke Google Sheets. Registrasi dibatalkan.",
-        );
-      }
-
-      // -- 7. Submit Teks dan Drive Links ke Firestore 
+      // -- 7. Submit Teks dan Drive Links ke Firestore
       const firestoreData = {
         competition: compKey,
         gelombang: gelombangName,
@@ -177,7 +207,21 @@ export const useRegisterLomba = () => {
         documents: uploadedDocs,
       };
 
-      await addDoc(collection(db, "registrations"), firestoreData);
+      await Promise.all([
+        fetch("/api/write-to-sheets", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sheetsData),
+          }).then(async (res) => {
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              throw new Error(
+                err.error || "Gagal menyimpan data ke Google Sheets."
+              );
+            }
+          }),
+        addDoc(collection(db, "registrations"), firestoreData)
+      ]);
 
       setSuccess(true);
       return { success: true, message: "Berhasil registrasi!" };

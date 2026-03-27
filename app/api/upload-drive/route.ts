@@ -41,8 +41,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
     const fileName = formData.get("fileName") as string | null;
-    const subfolderName = formData.get("subfolderName") as string | null;
-
+    const subfolderName = formData.get("subfolderName") as string | null;    const targetFolderIdParam = formData.get("targetFolderId") as string | null;
     if (!file || !fileName) {
       return NextResponse.json(
         { error: "File dan nama file wajib disertakan" },
@@ -69,9 +68,13 @@ export async function POST(request: NextRequest) {
 
     const drive = google.drive({ version: "v3", auth });
 
-    const targetFolderId = subfolderName
-      ? await getOrCreateSubfolder(drive, folderId, subfolderName)
-      : folderId;
+    // Gunakan targetFolderIdParam jika disediakan dari frontend untuk menghindari request folder creation berulang (race condition)
+    let finalTargetFolderId = folderId;
+    if (targetFolderIdParam) {
+      finalTargetFolderId = targetFolderIdParam;
+    } else if (subfolderName) {
+      finalTargetFolderId = await getOrCreateSubfolder(drive, folderId, subfolderName);
+    }
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const { Readable } = await import("stream");
@@ -82,7 +85,7 @@ export async function POST(request: NextRequest) {
       requestBody: {
         name: fileName,
         mimeType: "application/pdf",
-        parents: [targetFolderId],
+        parents: [finalTargetFolderId],
       },
       media: {
         mimeType: "application/pdf",
@@ -94,14 +97,32 @@ export async function POST(request: NextRequest) {
     const fileId = uploadResponse.data.id;
     const fileUrl = uploadResponse.data.webViewLink;
 
-    await drive.permissions.create({
-      fileId: fileId!,
-      supportsAllDrives: true,
-      requestBody: {
-        role: "reader",
-        type: "anyone",
-      },
-    });
+    // Retry mechanism khusus untuk google drive permission 
+    // karena google sering memberi 503 jika permission di request terlalu cepat & barengan (paralel)
+    let retries = 3;
+    while (retries > 0) {
+      try {
+        await drive.permissions.create({
+          fileId: fileId!,
+          supportsAllDrives: true,
+          requestBody: {
+            role: "reader",
+            type: "anyone",
+          },
+        });
+        break; // Jika sukses, keluar dari loop
+      } catch (permissionErr: any) {
+        if (permissionErr.code === 503 || permissionErr.code === 429) {
+          retries--;
+          if (retries === 0) throw permissionErr;
+          // Kasih jeda makin lama setiap retry (1 detik, 2 detik, etc)
+          await new Promise(resolve => setTimeout(resolve, (4 - retries) * 1000));
+        } else {
+          // Kalau error lain (bukan karena limit Google), langsung throw
+          throw permissionErr;
+        }
+      }
+    }
 
     return NextResponse.json({ fileId, fileUrl });
   } catch (error) {
