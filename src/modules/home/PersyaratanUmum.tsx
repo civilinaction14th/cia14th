@@ -89,41 +89,39 @@ export default function PersyaratanUmum() {
             Persyaratan Umum
           </h2>
 
-          <Image
-            src="/home/persyaratan/holder-dompet.webp"
-            alt="Holder dompet"
-            width={177}
-            height={1054}
-            className="absolute -left-4 top-16 z-[-1] hidden h-[40%] w-auto md:-left-8 md:block"
-            data-aos="zoom-in-up"
-            data-aos-delay="300"
-          />
+          <div data-aos="fade-up" data-aos-duration="1000">
+            <Image
+              src="/home/persyaratan/holder-dompet.webp"
+              alt="Holder dompet"
+              width={177}
+              height={1054}
+              className="absolute -left-4 top-16 z-[-1] hidden h-[40%] w-auto md:-left-8 md:block"
+            />
 
-          <BordirCard
-            bg="bg-[#F3E6CF]"
-            bordirColor="#F2A23A"
-            bordirWidth="thick"
-            data-aos="zoom-in-up"
-            data-aos-delay="300"
-          >
-            {content.map((item, index) => (
-              <div
-                key={index}
-                className="mb-4 text-left last:mb-0 md:text-justify"
-                data-aos="fade-up"
-                data-aos-delay={400 + index * 150}
-              >
-                <h3 className="mb-1 font-publicas text-lg font-bold leading-snug md:text-2xl ml-2 md:ml-0">
-                  {item.title}
-                </h3>
-                <ul className="list-disc space-y-1 pl-5 text-sm font-normal leading-relaxed marker:text-[#8D2D2D] md:space-y-1.5 md:text-lg md:leading-normal lg:text-xl">
-                  {item.points.map((point, pointIndex) => (
-                    <li key={`${item.title}-${pointIndex}`}>{point}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </BordirCard>
+            <BordirCard
+              bg="bg-[#F3E6CF]"
+              bordirColor="#F2A23A"
+              bordirWidth="thick"
+            >
+              {content.map((item, index) => (
+                <div
+                  key={index}
+                  className="mb-4 text-left last:mb-0 md:text-justify"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                >
+                  <h3 className="mb-1 font-publicas text-lg font-bold leading-snug md:text-2xl ml-2 md:ml-0">
+                    {item.title}
+                  </h3>
+                  <ul className="list-disc space-y-1 pl-5 text-sm font-normal leading-relaxed marker:text-[#8D2D2D] md:space-y-1.5 md:text-lg md:leading-normal lg:text-xl">
+                    {item.points.map((point, pointIndex) => (
+                      <li key={`${item.title}-${pointIndex}`}>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </BordirCard>
+          </div>
         </div>
       </DefaultLayout>
     </section>

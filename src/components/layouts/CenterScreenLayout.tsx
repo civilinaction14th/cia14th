@@ -27,14 +27,15 @@ export default function CenterScreenLayout({ children }: { children: React.React
       </div>
 
       {/* Texture overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
-        style={{
-          backgroundImage: "url('/images/TextureBg.webp')",
-          opacity: 0.58,
-          mixBlendMode: "soft-light",
-        }}
-      />
+      <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.58] mix-blend-soft-light overflow-hidden">
+        <Image
+          src="/images/TextureBg.webp"
+          alt="Texture Background"
+          fill
+          className="object-cover object-left-top"
+          priority
+        />
+      </div>
       
       {/* Container utama yg sudah diset center absolut */}
       <div className="relative z-10 w-full px-4 md:px-8 flex-1 flex flex-col justify-center items-center h-full">

@@ -26,15 +26,15 @@ const DefaultLombaLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* Texture overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-start z-6 pointer-events-none"
-        style={{
-          backgroundImage: "url('/images/TextureBg.webp')",
-          opacity: 0.48,
-          mixBlendMode: "soft-light",
-          height: "110%",
-        }}
-      />
+      <div className="absolute inset-0 z-6 pointer-events-none opacity-[0.48] mix-blend-soft-light overflow-hidden" style={{ height: "110%" }}>
+        <Image
+          src="/images/TextureBg.webp"
+          alt="Texture Background"
+          fill
+          className="object-cover object-left-top"
+          priority
+        />
+      </div>
       <div className="relative z-10 w-full px-4 md:px-8">{children}</div>
     </main>
   );

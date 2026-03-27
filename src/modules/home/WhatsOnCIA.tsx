@@ -55,13 +55,20 @@ export default function WhatsOnCIA() {
           />
         </div>
 
-        <div className="relative pt-45 md:pt-85 z-[99]">
+        <div
+          className="relative pt-45 md:pt-85 z-[99]"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+        >
           <Image
             src="/home/whatsoncia/whatsoncia.webp"
             alt="whatsOnCIA"
             width={3000}
             height={1000}
             className="w-full max-w-[90vw] md:max-w-[80vw] mx-auto drop-shadow-2xl"
+            data-aos="fade-right"
+            data-aos-delay={0}
+            data-aos-duration="1000"
           />
         </div>
       </div>
@@ -77,7 +84,14 @@ export default function WhatsOnCIA() {
         />
         <div className="flex flex-col gap-2">
           {competitions.map((comp, index) => (
-            <BordirCardCIA key={index} {...comp} />
+            <div
+              key={index}
+              data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
+              data-aos-delay={index * 150}
+              data-aos-duration="1000"
+            >
+              <BordirCardCIA {...comp} />
+            </div>
           ))}
         </div>
       </div>

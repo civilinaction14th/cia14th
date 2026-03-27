@@ -127,71 +127,69 @@ export default function InformasiLanjut() {
             Informasi Lanjut
           </h2>
 
-          <Image
-            src="/home/informasi-lanjut/holder-dompet.webp"
-            alt="Holder Dompet"
-            width={668}
-            height={218}
-            className="absolute -bottom-8 left-10 z-[-1] hidden h-auto w-[20%] md:block"
-            style={{ transform: "translate(-10%, 10%)" }}
-            loading="lazy"
-            data-aos="zoom-in-up"
-            data-aos-delay="300"
-          />
+          <div data-aos="fade-up" data-aos-duration="1000">
+            <Image
+              src="/home/informasi-lanjut/holder-dompet.webp"
+              alt="Holder Dompet"
+              width={668}
+              height={218}
+              className="absolute -bottom-8 left-10 z-[-1] hidden h-auto w-[20%] md:block"
+              style={{ transform: "translate(-10%, 10%)" }}
+              loading="lazy"
+            />
 
-          <BordirCard
-            bg="bg-linear-to-b from-[#1F4B66] to-[#0E2A3A]"
-            bordirColor="#BAA687"
-            bordirWidth="thick"
-            className="mx-auto w-full"
-            data-aos="zoom-in-up"
-            data-aos-delay="300"
-          >
-            {contacts.map((item, index) => (
-              <div
-                key={item.cabang}
-                className="mb-8 flex w-full flex-col items-center gap-4 px-1 last:mb-0 sm:px-2 md:px-0"
-                data-aos="fade-up"
-                data-aos-delay={400 + index * 150}
-              >
-                <BordirLabel
-                  bg={labelBgByCabang[item.cabang] ?? "bg-[#B0704C]"}
-                  bordirColor="#F3E6CF"
-                  bordirWidth="default"
-                  className="text-white font-bold font-poppins text-base md:text-lg shadow-md"
+            <BordirCard
+              bg="bg-linear-to-b from-[#1F4B66] to-[#0E2A3A]"
+              bordirColor="#BAA687"
+              bordirWidth="thick"
+              className="mx-auto w-full"
+            >
+              {contacts.map((item, index) => (
+                <div
+                  key={item.cabang}
+                  className="mb-8 flex w-full flex-col items-center gap-4 px-1 last:mb-0 sm:px-2 md:px-0"
+                  data-aos="fade-up"
+                  data-aos-delay={ index * 100 }
                 >
-                  {item.cabang}
-                </BordirLabel>
+                  <BordirLabel
+                    bg={labelBgByCabang[item.cabang] ?? "bg-[#B0704C]"}
+                    bordirColor="#F3E6CF"
+                    bordirWidth="default"
+                    className="text-white font-bold font-poppins text-base md:text-lg shadow-md"
+                  >
+                    {item.cabang}
+                  </BordirLabel>
 
-                <div className="mt-0 grid w-full grid-cols-1 gap-y-6 px-2 sm:gap-x-8 sm:px-3 md:grid-cols-2 md:gap-x-12 md:gap-y-8 md:px-0">
-                  {item.detail.map((person) => (
-                    <div
-                      key={`${item.cabang}-${person.name}`}
-                      className="pl-1 text-white md:pl-0 text-center md:text-left"
-                    >
-                      <p className="text-base font-bold leading-snug md:text-xl">
-                        {person.name}
-                      </p>
-                      <p className="mt-1 text-sm font-normal md:text-base">
-                        <span className="inline-block w-20 md:w-24">
-                          WhatsApp
-                        </span>
-                        <span className="mx-1">:</span>
-                        {person.whatsapp}
-                      </p>
-                      <p className="text-sm font-normal md:text-base">
-                        <span className="inline-block w-20 md:w-24">
-                          ID Line
-                        </span>
-                        <span className="mx-1">:</span>
-                        {person.line}
-                      </p>
-                    </div>
-                  ))}
+                  <div className="mt-0 grid w-full grid-cols-1 gap-y-6 px-2 sm:gap-x-8 sm:px-3 md:grid-cols-2 md:gap-x-12 md:gap-y-8 md:px-0">
+                    {item.detail.map((person) => (
+                      <div
+                        key={`${item.cabang}-${person.name}`}
+                        className="pl-1 text-white md:pl-0 text-center md:text-left"
+                      >
+                        <p className="text-base font-bold leading-snug md:text-xl">
+                          {person.name}
+                        </p>
+                        <p className="mt-1 text-sm font-normal md:text-base">
+                          <span className="inline-block w-20 md:w-24">
+                            WhatsApp
+                          </span>
+                          <span className="mx-1">:</span>
+                          {person.whatsapp}
+                        </p>
+                        <p className="text-sm font-normal md:text-base">
+                          <span className="inline-block w-20 md:w-24">
+                            ID Line
+                          </span>
+                          <span className="mx-1">:</span>
+                          {person.line}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </BordirCard>
+              ))}
+            </BordirCard>
+          </div>
         </div>
       </DefaultLayout>
       <div className="relative left-1/2 z-0 -mt-24 w-[104vw] -translate-x-1/2 pointer-events-none md:-mt-80 lg:-mt-160">

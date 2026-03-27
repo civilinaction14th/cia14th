@@ -29,7 +29,8 @@ export const BordirCardCIA: React.FC<BordirCardCIAProps> = ({
   )}' stroke-width='2' stroke-dasharray='10,10' stroke-linecap='round'/></svg>`;
 
   const lowerBg = bg.toLowerCase();
-  const needsDarkText = lowerBg === "#f0b040" || lowerBg === "#e05020" || lowerBg === "#00a86b";
+  const needsDarkText =
+    lowerBg === "#f0b040" || lowerBg === "#e05020" || lowerBg === "#00a86b";
 
   return (
     <div
@@ -91,7 +92,9 @@ export const BordirCardCIA: React.FC<BordirCardCIAProps> = ({
                 imagePosition === "right" ? "md:text-right" : "md:text-left",
               )}
               style={{
-                textShadow: needsDarkText ? "none" : "2px 2px 4px rgba(0,0,0,0.2)",
+                textShadow: needsDarkText
+                  ? "none"
+                  : "2px 2px 4px rgba(0,0,0,0.2)",
               }}
             >
               {title}
