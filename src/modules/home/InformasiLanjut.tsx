@@ -59,7 +59,7 @@ const labelBgByCabang: Record<string, string> = {
 
 export default function InformasiLanjut() {
   return (
-    <section className="relative overflow-hidden [clip-path:inset(-40rem_0_0_0)] isolate">
+    <section id="informasi-lanjut" className="relative overflow-hidden [clip-path:inset(-40rem_0_0_0)] isolate">
       {/* Texture overlay */}
       <div
         className="absolute inset-0 bg-cover bg-start z-10 pointer-events-none"
