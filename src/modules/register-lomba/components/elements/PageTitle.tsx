@@ -23,7 +23,7 @@ const LOMBA_STYLES: Record<
     bgBottom: "#346C96",
   },
   itc: {
-    title: "Innovation Technology Competition",
+    title: "Innovative Tender Competition",
     bgTop: "#26B480",
     bgBottom: "#1A7754",
   },
