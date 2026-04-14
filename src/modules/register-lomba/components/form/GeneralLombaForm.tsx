@@ -4,7 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { generalValidationSchema, fileAcceptPdf } from "../../helper/validation";
+import {
+  generalValidationSchema,
+  fileAcceptPdf,
+} from "../../helper/validation";
 import InputField from "./InputField";
 import FileUploadField from "./FileUploadField";
 import Button from "./Button";
@@ -32,7 +35,7 @@ interface GeneralFormValues {
 const LOMBA_MAP: Record<string, string> = {
   cic: "Civil Innovation Challenge 2026",
   sbc: "Sustainable Bridge Competition 2026",
-  itc: "Innovation Technology Competition 2026",
+  itc: "Innovattive Tender Competition 2026",
 };
 
 export default function GeneralLombaForm({
@@ -118,7 +121,9 @@ export default function GeneralLombaForm({
           required
           placeholder="Masukkan asal universitas"
           error={errors.asalUniversitas?.message}
-          {...register("asalUniversitas", { required: "Asal Universitas wajib diisi" })}
+          {...register("asalUniversitas", {
+            required: "Asal Universitas wajib diisi",
+          })}
         />
         <InputField
           label="Nama Tim"
