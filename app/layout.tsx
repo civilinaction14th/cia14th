@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
+import { Analytics } from "@vercel/analytics/next";
 
 import { AOSProvider } from "@/src/utils/providers/AOSProvider";
 import ToasterProvider from "@/src/utils/providers/ToasterProvider";
@@ -149,6 +150,7 @@ export default function RootLayout({
           <ToasterProvider />
           <AuthProvider>{children}</AuthProvider>
         </AOSProvider>
+        <Analytics />
       </body>
     </html>
   );

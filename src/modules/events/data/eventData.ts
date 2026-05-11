@@ -52,6 +52,11 @@ export const events: EventData[] = [
         startDate: new Date("2026-03-27"),
         endDate: new Date("2026-05-02"),
       },
+      // {
+      //   label: "Diperpanjang",
+      //   startDate: new Date("2026-05-03"),
+      //   endDate: new Date("2026-05-17"),
+      // },
       {
         label: "Gelombang 2",
         startDate: new Date("2026-05-04"),
