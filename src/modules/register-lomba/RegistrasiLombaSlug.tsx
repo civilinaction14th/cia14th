@@ -15,6 +15,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useRegisterLomba } from "@/src/utils/hooks/useRegisterLomba";
 import Success from "./Success";
 import { UdahDaftarLombaLainModal } from "./components/elements/UdahDaftarLombaLainModal";
+import { events, isEventOpen, getCurrentDate } from "@/src/modules/events/data/eventData";
 
 const VALID_SLUGS = ["cic", "sbc", "fcec", "itc"];
 
@@ -66,6 +67,26 @@ export default function RegistrasiLombaSlug({
         <div className="flex flex-col items-center justify-center min-h-[50vh] mt-28 text-white font-poppins gap-4">
           <h1 className="text-2xl font-bold">Lomba tidak ditemukan</h1>
           <p className="text-white/70">Silakan pilih lomba yang tersedia.</p>
+        </div>
+      </DefaultLombaLayout>
+    );
+  }
+
+  const currentEvent = events.find((e) => e.id === lomba);
+  const isOpen = currentEvent ? isEventOpen(currentEvent, getCurrentDate()) : false;
+
+  if (!isOpen) {
+    return (
+      <DefaultLombaLayout>
+        <div className="flex flex-col items-center justify-center min-h-[50vh] mt-28 text-white font-poppins gap-4">
+          <h1 className="text-2xl font-bold">Pendaftaran Ditutup</h1>
+          <p className="text-white/70">Maaf, pendaftaran untuk kompetisi ini sedang ditutup atau belum dibuka.</p>
+          <button 
+            onClick={() => router.push("/events")}
+            className="mt-4 bg-[#8D2D2D] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#722020] transition-colors"
+          >
+            Kembali ke Events
+          </button>
         </div>
       </DefaultLombaLayout>
     );
